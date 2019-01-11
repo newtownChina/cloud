@@ -1,5 +1,7 @@
 const util = require('../../utils/util.js')
 const app = getApp()
+const db = wx.cloud.database()
+const _ = db.command
 Page({
   data: {
     focus:false,
@@ -13,230 +15,7 @@ Page({
     weatherHidePane: true, //默认隐藏
     openid: wx.getStorageSync("openid")
   },
-  wanted: function () {
-    if(!telphone){//手机号不存在
-      return
-    }
-    var g_id = this.data.good.id
-    var that = this
-    wx.request({
-      url: config.host+'wanted.jsp',
-      data: {
-        telphone: telphone,
-        g_id: g_id
-      },
-      success: function (res) {
-        console.log(res.data)
-        if (res.data.trim() == "wanted") {
-          that.setData({
-            wanted_icon: "wanted.png"
-          })
-        } else if (res.data.trim() == "nowanted") {
-          that.setData({
-            wanted_icon: "nowanted.png"
-          })
-        }
-      }
-    })
-  },
-  getLeaveMessage: function (e) {
-    console.log("留言:" + e.detail.value)
-    var leaveMessage = e.detail.value
-    this.setData({
-      leaveMessage: leaveMessage
-    })
-  },
-  showLeaveMessagePane: function () {
-    var telphone = util.checkLogin()
-    if (!telphone) {//手机号不存在
-      return
-    }
-    this.setData({
-      weatherHidePane: false,
-      submitBtnText:"留言",
-      focus:true
-    })
-    console.log(this.data.userInfo)
-  },
-  submitLeaveMessage: function () {
-    //获取留言者的账号（手机号/微信号）
-    var telphone = util.checkLogin();
-    //留言的商品的id
-    var g_id = this.data.good.id
-    //获取留言者的头像
-    var avatarUrl = this.data.userInfo.avatarUrl
-    //获取微信昵称
-    var nickName = this.data.userInfo.nickName
-    var that = this
-    setTimeout(function(){
-      //获取留言
-      var leaveMessage = that.data.leaveMessage
-      if (!leaveMessage||!leaveMessage.trim()) {
-        wx.showToast({
-          title: "说点什么吧~",
-          icon:"loading",
-          duration:600
-        })
-        return
-      }
-      wx.showLoading({
-        title: '奋力'+that.data.submitBtnText+'中^^',
-      })
-      if(that.data.submitBtnText == "留言"){
-        wx.request({
-          url: config.host+'leaveMessage.jsp',
-          data: {
-            g_id: g_id,
-            oper: "add",//增加留言,del是删除
-            avatarUrl: avatarUrl,
-            nickName: nickName,
-            telphone: telphone,
-            leaveMessage: leaveMessage
-          },
-          success: function (res) {
-            console.log(res.data)
-            wx.hideLoading()
-            wx.showToast({
-              title: that.data.submitBtnText + '成功！',
-              icon: 'success',
-              duration: 600
-            })
-            if (res.data.trim() == "addLeaveMessageSuccess") {
-              //刷新留言
-              that.queryLeaveMessage(that, g_id)//传入当前页面，否则会提示that未定义
-              //留言成功关闭留言板
-              that.setData({
-                weatherHidePane: true
-              })
-            }
-          },
-          complete: function () {
-            wx.hideLoading()
-          }
-        })
-      }else if(that.data.submitBtnText=="回复"){
-        console.log('回复的id：' + that.data.respId)
-        wx.request({
-          url: config.host+'leaveMessage.jsp',
-          data: {
-            oper: "resp",//增加回复
-            respId: that.data.respId,
-            leaveMessage: leaveMessage//此时是回复
-          },
-          success: function (res) {
-            console.log(res.data)
-            wx.hideLoading()
-            wx.showToast({
-              title: that.data.submitBtnText + '成功！',
-              icon: 'success',
-              duration: 600
-            })
-            if (res.data.trim() == "addRespLeaveMessageSuccess") {
-              //刷新回复
-              that.queryLeaveMessage(that, g_id)//传入当前页面，否则会提示that未定义
-              //留言成功关闭留言板
-              that.setData({
-                weatherHidePane: true
-              })
-            }
-          },
-          complete: function () {
-            wx.hideLoading()
-          }
-        })
-      }
-    },500)
-  },
-  deleteLeaveMessage: function (e) {
-    var deleteId = e.target.dataset.id
-    var g_id = this.data.good.id
-    var that = this
-    wx.request({
-      url: config.host+'leaveMessage.jsp',
-      data: {
-        oper: "del",
-        telphone: this.data.telphone,
-        id: deleteId
-      },
-      success: function (res) {
-        wx.showToast({
-          title: '删除成功',
-          icon: 'success',
-          duration: 500
-        })
-        if (res.data.trim() == "deletedLeaveMessageSuccess") {
-          that.queryLeaveMessage(that, g_id)
-        }
-      }
-    })
-  },
-  deleteRespLeaveMessage:function(e){
-    var deleteRespId = e.target.dataset.id
-    var g_id = this.data.good.id
-    var that = this
-    console.log("删除的回复的id:"+deleteRespId)
-    wx.request({
-      url: config.host+'leaveMessage.jsp',
-      data: {
-        oper: "delResp",
-        id: deleteRespId
-      },
-      success: function (res) {
-        if (res.data.trim() == "deletedRespLeaveMessageSuccess") {
-          wx.showToast({
-            title: '删除成功',
-            icon: 'success',
-            duration: 500
-          })
-          that.queryLeaveMessage(that, g_id)
-        }
-      }
-    })
-  },
-  showRespLeaveMessagePane:function(e){
-    //回复的留言的id
-    var respId = e.target.dataset.id
-    console.log("回复的留言的id:"+respId)
-    this.setData({
-      weatherHidePane:false,
-      submitBtnText:"回复",
-      respId:respId
-    })
-  },
-  buyNowBtn:function(){
-    /*不能买自己的商品*/
-    var phonenum = util.checkLogin()//当前用户电话
-    var telphone = this.data.good.telphone//商品所对应的电话
-    var userInfo = this.data.userInfo
-    if (phonenum && userInfo) {//phonenum && userInfo表示用户已经登录
-      if (phonenum == telphone) {
-        wx.showModal({
-          title: '提示',
-          content: '亲，不能买自己的商品哦',
-        })
-        return
-      } else {
-        var goodstr = JSON.stringify(this.data.good)
-        wx.navigateTo({
-          url: '/pages/order/order?good=' + goodstr
-        })
-      }
-      // var goodstr = JSON.stringify(this.data.good)
-      // wx.navigateTo({
-      //   url: '/pages/order/order?good=' + goodstr
-      // })
-    }
-  },
-  closePane:function(){
-    this.setData({
-      weatherHidePane:true
-    })
-  },
-  previewImg: function (e) {
-    wx.previewImage({
-      urls: [e.target.dataset.src], // 当前显示图片的http链接
-    })
-  },
+  /*生命周期事件 开始*/
   onLoad: function (options) {
     console.log(app.globalData)
     var telphone = wx.getStorageSync("storedPhoneNum")
@@ -251,16 +30,16 @@ Page({
       wanted_icon: options.wanted_png || "nowanted.png",//从“我的”点进来的，默认是想要
       userInfo: app.globalData.userInfo,
       telphone: telphone,
-      good,good
+      good, good
     })
-    
+
     /*查询当前商品是否为我想要的,以设置收藏图标的颜色*/
     var that = this
     return
     if (telphone) {//如果手机号存在，则查询
       console.log("手机号存在")
       wx.request({
-        url: config.host+'queryWeatherInWanted.jsp',
+        url: config.host + 'queryWeatherInWanted.jsp',
         data: {
           telphone: this.data.telphone,
           g_id: g_id
@@ -290,7 +69,166 @@ Page({
     //不能直接调用queryLeaveMessage,会提示尚未定义346134
     //不要放到onload，否则如果用户没登录，前往登录后，再返回，此时由于留言已经查询过了，这么自己发布的留言将会没有删除按钮
   },
-  contactSeller:function(e){
+  
+  /*生命周期事件 结束*/ 
+  /*自定义事件 开始 */
+  wanted: function () {
+    var id = this.data.good._id
+    var openid = this.data.openid
+    var that = this
+    db.collection("user").where({
+      _openid:openid
+    })
+    .get()
+    .then(res=>{
+      var u_id = res.data[0]._id
+      console.log(u_id)
+      db.collection("user").doc(u_id).update({
+        data: {
+          want: _.push([id])
+        }
+      })
+      that.setData({
+        wanted_icon: "wanted.png"
+      })
+    })
+  },
+  getLeaveMessage: function (e) {
+    console.log("留言:" + e.detail.value)
+    var leaveMessage = e.detail.value
+    this.setData({
+      leaveMessage: leaveMessage
+    })
+  },
+  showLeaveMessagePane: function () {
+    var telphone = util.checkLogin()
+    if (!telphone) {//手机号不存在
+      return
+    }
+    this.setData({
+      weatherHidePane: false,
+      submitBtnText: "留言",
+      focus: true
+    })
+    console.log(this.data.userInfo)
+  },
+  submitLeaveMessage: function () {
+    //获取留言者的账号（手机号/微信号）
+    //留言的商品的id
+    var id = this.data.good._id
+    var openid  = this.data.openid
+    //获取留言者的头像
+    var avatarUrl = this.data.userInfo.avatarUrl
+    //获取微信昵称
+    var nickName = this.data.userInfo.nickName
+    var that = this
+    setTimeout(function () {
+      //获取留言
+      var leaveMessage = that.data.leaveMessage
+      if (!leaveMessage || !leaveMessage.trim()) {
+        wx.showToast({
+          title: "说点什么吧~",
+          icon: "loading",
+          duration: 600
+        })
+        return
+      }
+      wx.showLoading({
+        title: '奋力' + that.data.submitBtnText + '中^^',
+      })
+      if (that.data.submitBtnText == "留言") {
+        db.collection("good").doc(id).update({
+          data:{
+            msg: _.push([{
+              nick: nickName,
+              avatar: avatarUrl,
+              msg_txt: leaveMessage,
+              openid: openid,
+              msg_dt:new Date()
+            }])
+          }
+        })
+        .then(res=>{
+          wx.hideLoading()
+          that.setData({
+            weatherHidePane: true
+          })
+          wx.showToast({
+            title: that.data.submitBtnText + '成功！',
+            icon: 'success',
+            duration: 600
+          })
+          that.queryLeaveMessage(id)
+        })
+        .catch(err=>{
+          wx.showToast({
+            title: that.data.submitBtnText + '失败！',
+            icon: 'success',
+            duration: 600
+          })
+        })
+      }
+    }, 500)
+  },
+  deleteLeaveMessage: function (e) {
+    var index = e.target.dataset.index
+    var msg_left = this.data.good.msg.splice(index,1)
+    console.log(this.data.good)
+    var id = this.data.good._id
+    var that = this
+    db.collection("good").doc(id).update({
+      data:{
+        msg:that.data.good.msg
+      }
+    })
+    .then(res=>{
+      wx.showToast({
+        title: '删除成功',
+        icon: 'success',
+        duration: 500
+      })
+      that.queryLeaveMessage(id)
+    })
+    .catch(err=>{
+
+    })
+  },
+  queryLeaveMessage:function(id){
+    var that = this
+    db.collection("good").doc(id)
+    .get()
+    .then(res=>{
+      console.log(res)
+      that.setData({
+        good:res.data
+      })
+    })
+  },
+  buyNowBtn: function () {
+    /*不能买自己的商品*/
+    var phonenum = util.checkLogin()//当前用户电话
+    var telphone = this.data.good.telphone//商品所对应的电话
+    var userInfo = this.data.userInfo
+    if (phonenum && userInfo) {//phonenum && userInfo表示用户已经登录
+      if (phonenum == telphone) {
+        wx.showModal({
+          title: '提示',
+          content: '亲，不能买自己的商品哦',
+        })
+        return
+      } else {
+        var goodstr = JSON.stringify(this.data.good)
+        wx.navigateTo({
+          url: '/pages/order/order?good=' + goodstr
+        })
+      }
+      // var goodstr = JSON.stringify(this.data.good)
+      // wx.navigateTo({
+      //   url: '/pages/order/order?good=' + goodstr
+      // })
+    }
+  },
+  contactSeller: function (e) {
     /*不能买自己的商品*/
     var good = e.currentTarget.dataset.good
     var phonenum = util.checkLogin()//当前用户电话
@@ -310,5 +248,16 @@ Page({
         })
       }
     }
+  },
+  closePane: function () {
+    this.setData({
+      weatherHidePane: true
+    })
+  },
+  previewImg: function (e) {
+    wx.previewImage({
+      urls: [e.target.dataset.src], // 当前显示图片的http链接
+    })
   }
+  /*自定义事件 结束 */
 })

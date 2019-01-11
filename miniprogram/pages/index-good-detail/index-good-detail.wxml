@@ -26,31 +26,29 @@
       <image class="telicon" src="/images/tel.png"></image>-->
     </view>
     <view class="goodNameAndDesc">
-      <view class="goodName">{{good.good_name}}</view>
-      <view class="goodDesc">{{good.good_desc}}</view>
+      <view class="goodName">{{good.name}}</view>
+      <view class="goodDesc">{{good.desc}}</view>
     </view>
 
     <view class="publish_time">发布时间:{{good.pub_dt}}</view>
     <view class="leftMessage">
       <view wx:if="{{good.msg.length < 1}}">暂无留言</view>
-      <block wx:for="{{good.msg}}" wx:for-item="item">
+      <block wx:for="{{good.msg}}" wx:for-item="m" wx:for-index="index">
         <!--留言留言留言留言留言留言留言-->
         <view class="item">
           <view class="avatar_url">
-            <image src="{{item.avatar}}" />
+            <image src="{{m.avatar}}" />
           </view>
           <view class="name_message">
             <view class="nick_name">
-              <text>{{item.nick}}</text>
-              <text class="time">{{"留言时间"}}</text>
+              <text>{{m.nick}}</text>
+              <text class="time">{{m.msg_dt}}</text>
             </view>
             <!-- <view>{{item.telphone}}</view> -->
-            <view class="leave_message">{{item.msg_txt}}</view>
+            <view class="leave_message">{{m.msg_txt}}</view>
             <view  class="item_oper">
-              <!--商品是我发布的，但是留言不是我的，则显示回复按钮-->
-              <view class="delBtn" wx:if="{{good.telphone == telphone && item.telphone != telphone}}" data-id="{{item.id}}" bindtap="showRespLeaveMessagePane"> 回复 </view>
               <!--说明是我发布的，则显示删除按钮-->
-              <view class="delBtn" wx:if="{{item.telphone==telphone}}" data-id="{{item.id}}" bindtap="deleteLeaveMessage"> 删除 </view>
+              <view class="delBtn" wx:if="{{m.openid==openid}}" data-index="{{index}}" bindtap="deleteLeaveMessage"> 删除 </view>
             </view>
           </view>
         </view>

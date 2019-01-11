@@ -3,9 +3,6 @@
     <view class="online">我卖出的</view>
   </view>
   <view class="container">
-    <!-- <view class="title">
-      <text>在售宝贝</text>
-    </view> -->
     <block wx:for="{{goods}}" wx:for-item="good">
       <view class="good">
         <view class="userInfo">

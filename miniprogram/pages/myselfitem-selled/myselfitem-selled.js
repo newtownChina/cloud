@@ -1,22 +1,18 @@
 /*我想要的里面没有分页，一次查完了*/
 const util = require('../../utils/util.js')
 const app = getApp()
+const db = wx.cloud.database()
 Page({
   data: {
     storedPhoneNum: null
   },
-  phoneCall: function (e) {
-    wx.makePhoneCall({
-      phoneNumber: e.target.dataset.phone
-    })
-  },
+  /*生命周期事件 开始 */
   onLoad: function (options) {
     this.setData({
       storedPhoneNum: wx.getStorageSync("storedPhoneNum")
     })
     console.log("加载")
   },
-
   onShow: function () {
     this.setData({
       storedPhoneNum: wx.getStorageSync("storedPhoneNum")
@@ -24,7 +20,7 @@ Page({
     var that = this
     var ifLogin = util.checkLogin()
     console.log("myselfpublish.js:登录状态:" + ifLogin)
-    if (!ifLogin){
+    if (!ifLogin) {
       return
     } else {
       //表明已经登录
@@ -46,6 +42,21 @@ Page({
       })*/
     }
   },
+  onPullDownRefresh: function () {
+
+  },
+
+  onReachBottom: function () {
+
+  },
+  /*生命周期事件 结束 */
+  /*自定义事件 开始 */
+  phoneCall: function (e) {
+    wx.makePhoneCall({
+      phoneNumber: e.target.dataset.phone
+    })
+  },
+  
   navigateToGoodDetail: function (e) {
     var good = e.currentTarget.dataset.good
     var goodstr = JSON.stringify(good)
@@ -59,12 +70,6 @@ Page({
     wx.navigateTo({
       url: '../transport/transport?gid='+gid
     })
-  },
-  onPullDownRefresh: function () {
-
-  },
-
-  onReachBottom: function () {
-
   }
+  /*自定义事件 结束 */
 })

@@ -1,11 +1,7 @@
-//logs.js
 const util = require('../../utils/util.js')
 const db = wx.cloud.database()
 const app = getApp();
 Page({
-  /**
-   * 页面的初始数据
-   */
   data: {
     userInfo: {},
     addPicPosition: "0 auto",
@@ -16,24 +12,30 @@ Page({
     isHidden: true//,
     //publishing:false//是否正在发布中，防止用户多次点击
   },
-  getLocation: function (event) {
-    var that = this;
-    wx.getSetting({
-      success(res) {
-        console.log(res);
-        if (!res.authSetting['scope.userLocation']) {
-          wx.authorize({
-            scope: 'scope.userLocation',
-            success() {
-              util.openMapLocation();
-            }
-          })
-        } else {
-          util.openMapLocation();
-        }
-      }
+  /*生命周期事件 开始 */
+  onLoad: function (options) {
+    this.setData({
+      userInfo: app.globalData.userInfo
     })
+    console.log("push.js:" + this.data.userInfo.nickName)
   },
+  //获取分类页面设置的全局变量，这样从分类页返回时候可以获取值
+  onShow: function () {
+    this.setData({
+      storedPhoneNum: wx.getStorageSync("storedPhoneNum"),
+      userInfo: app.globalData.userInfo
+    })
+    console.log("页面加载")
+    if (app.globalData.classifyDetailName) {//表示是在分类选项卡选了新分类
+      this.setData({
+        classifyDetailName: app.globalData.classifyDetailName
+      })
+    }
+    //没有改变分类则使用editingGoodInfo的分类
+  },
+  /*生命周期事件 结束 */
+
+  /*自定义事件 开始*/
   addPic: function () {
     var that = this;
     wx.chooseImage({
@@ -82,10 +84,10 @@ Page({
       isHidden: true
     });
   },
-  checkAndPush:function () {
+  checkAndPush: function () {
     //检查登录状态
     var ifLogin = util.checkLogin()
-    if (!ifLogin || !app.globalData.userInfo){
+    if (!ifLogin || !app.globalData.userInfo) {
       return
     }
     console.log(this.data.classifyDetailName)
@@ -113,13 +115,13 @@ Page({
         icon: "loading",
         duration: 800
       })//parseFloat在价格是0.0.1.0.1这种情况会解析成0，防止价格输入错误，发布失败
-    } else if (parseFloat(!this.data.sellPrice) ||parseFloat(this.data.sellPrice) <= 0.01) {    //检查售价
+    } else if (parseFloat(!this.data.sellPrice) || parseFloat(this.data.sellPrice) <= 0.01) {    //检查售价
       wx.showToast({
         title: "卖价低于1分",
         icon: "loading",
         duration: 800
       })
-    } else if (parseFloat(!this.data.costPrice) || parseFloat(this.data.costPrice) <= 0.01){    //检查原价
+    } else if (parseFloat(!this.data.costPrice) || parseFloat(this.data.costPrice) <= 0.01) {    //检查原价
       wx.showToast({
         title: "原价低于1分",
         icon: "loading",
@@ -199,7 +201,7 @@ Page({
               })
               console.log(error)
             })
-            
+
           }
         }
       }, 1000)
@@ -232,32 +234,7 @@ Page({
       costPrice: e.detail.value
     })
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    this.setData({
-      userInfo: app.globalData.userInfo
-    })
-    console.log("push.js:" + this.data.userInfo.nickName)
-  },
-  //获取分类页面设置的全局变量，这样从分类页返回时候可以获取值
-  onShow: function () {
-    this.setData({
-      storedPhoneNum: wx.getStorageSync("storedPhoneNum"),
-      userInfo: app.globalData.userInfo
-    })
-    console.log("页面加载")
-    if (app.globalData.classifyDetailName) {//表示是在分类选项卡选了新分类
-      this.setData({
-        classifyDetailName: app.globalData.classifyDetailName
-      })
-    }
-    //没有改变分类则使用editingGoodInfo的分类
-  },
-  onUnload: function () {
-    console.log("页面卸载")
-  },
+
   deleteChoosedPic: function (e) {
     //用于上传的图片tempjpgs和用于在wxml中显示的showtempjpgs的区别是有null填充
     var index = e.target.dataset.id;
@@ -283,4 +260,5 @@ Page({
       urls: [e.target.dataset.src], // 当前显示图片的http链接
     })
   }
+  /*自定义事件 结束 */
 })

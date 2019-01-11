@@ -97,37 +97,14 @@ Page({
           wx.showLoading({
             title: '删除中……',
           })
-          wx.request({
-            url: config.host + 'delGood.jsp',
-            data: {
-              id: delGoodId
-            },
-            success: function (res) {
-              if (res.data) {
-                wx.hideLoading()
-                wx.showToast({
-                  title: '删除成功',
-                  duration: 800
-                })
-                //that.onShow()
-                //显示下架商品
-                that.showPublishGoods(false)
-              }
-            },
-            fail: function () {
-              if (res.data) {
-                wx.hideLoading()
-                wx.showToast({
-                  title: '删除失败%>_<%',
-                  duration: 800
-                })
-                that.onShow()
-              }
-            },
-            complete: function () {
-              wx.hideLoading()
-            }
+          var removed = db.collection("good").doc(delGoodId).remove()
+          console.log(removed)
+          wx.hideLoading()
+          wx.showToast({
+            title: '删除成功',
+            duration: 800
           })
+          func.showPublishGoods(0,that)
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
