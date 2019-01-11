@@ -1,0 +1,47 @@
+<!--logs.wxml-->
+<view class="container">
+  <scroll-view scroll-x>
+    <view class="addPic">
+      <view class="picwrapper" bindtap="addPic" style="margin:{{addPicPosition}};">
+        <image src="/images/camera.png"></image>
+        <text>添加图片</text>
+      </view>
+      <block wx:for="{{good.pics}}" wx:for-item="pic">
+        <view class="picpreview">
+          <image data-src="{{pic}}" bindtap="previewImg" mode="aspectFill" src="{{pic}}"></image>
+          <icon data-id="{{index}}" bindtap="deleteChoosedPic" type="clear" size="20" />
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+  <view class="desc">
+    <input type="text" placeholder="为闲置宝贝取个诱人的名字吧（30字以内）" bindblur="getGoodName" value="{{good.name}}" />
+    <textarea bindblur="getGoodDesc" placeholder="在这里详细描述一下你的宝贝吧，如品牌，规格，成色，购买渠道，转手原因等"  value="{{good.desc}}"></textarea>
+  </view>
+  <view class="info">
+    <view class="infoItem borderBottom" bindtap="navigateToClassify">分类
+      <text class="gt">></text>
+      <text class="gt">{{good.clas}}</text>
+    </view>
+    <view class="infoItem borderBottom" bindtap="showPriceGivenPane">价格
+      <text class="gt">></text>
+      <text class="gt">{{good.price_s}}</text>
+    </view>
+  </view>
+  <view class="pushBtn" bindtap="checkAndPush">保存</view>
+</view>
+<!--价格输入框-->
+<view class="priceGivenPane" hidden="{{isHidden}}">
+  <view class="costPrice">
+    <text>想卖多少钱？</text>
+    <view class="inputPrice">
+      <text>￥</text>
+      <input type="number" placeholder="卖价" bindblur="getSellPrice"   value="{{good.prc_s}}"></input>
+    </view>
+    <view class="inputPrice">
+      <text>原价</text>
+      <input type="number" placeholder="可不输入" bindblur="getCostPrice" value="{{good.prc_b}}"></input>
+    </view>
+    <view class="yes" bindtap="yesPrice">确定</view>
+  </view>
+</view>

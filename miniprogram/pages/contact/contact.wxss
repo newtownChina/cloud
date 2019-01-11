@@ -1,0 +1,31 @@
+Page{
+  margin:0;
+  padding:0;
+}
+.container{
+  width:100%;
+  height:100%;
+  margin:0;
+  padding:0 20rpx;
+  font-size:12px;
+}
+.title{
+  width:100%;
+  height:80rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-bottom:1px solid #ddd;
+  margin-bottom:10rpx;
+}
+view{
+  font-size:14px;
+}
+.qunimage{
+  width:400rpx;
+  height:400rpx;
+  margin:10rpx auto;
+}
+
+

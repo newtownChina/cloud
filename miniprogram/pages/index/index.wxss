@@ -1,137 +1,217 @@
-/**index.wxss**/
-
-page {
-  background: #f6f6f6;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+Page{
+  margin:0;
+  padding:0;
 }
-
-.userinfo, .uploader, .tunnel {
-  margin-top: 40rpx;
-  height: 140rpx;
-  width: 100%;
-  background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-left: none;
-  border-right: none;
+.container{
+  width:100%;
+  height:100%;
+  margin:0;
+  padding:0 20rpx;
+  font-size:12px;
+}
+.title{
+  float:left;
+  text-align: left;
+}
+.good{
+  width:100%;
+  border-top:1px solid #ddd;
+  margin:5px 5px 0 5px;
+  padding:5px;
+}
+.userInfo{
+  width:100%;
+  height:140rpx;
+  display: flex;
+}
+.userPhoto{
+  width:120rpx;
+  height:120rpx;
+  float:left;
+}
+.userPhoto image{
+  width:120rpx;
+  height:120rpx;
+  border-radius: 50%;
+}
+.userName{
+  margin:15px;
+  float:left;
+  font-size: 13px;
+}
+.goodPics{
   display: flex;
   flex-direction: row;
-  align-items: center;
-  transition: all 300ms ease;
-}
-
-.userinfo-avatar {
-  width: 100rpx;
-  height: 100rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-  background-size: cover;
-  background-color: white;
-}
-
-.userinfo-avatar:after {
-  border: none;
-}
-
-.userinfo-nickname {
-  font-size: 32rpx;
-  color: #007aff;
-  background-color: white;
-  background-size: cover;
-}
-
-.userinfo-nickname::after {
-  border: none;
-}
-
-.uploader, .tunnel {
-  height: auto;
-  padding: 0 0 0 40rpx;
-  flex-direction: column;
-  align-items: flex-start;
-  box-sizing: border-box;
-}
-
-.uploader-text, .tunnel-text {
   width: 100%;
-  line-height: 52px;
-  font-size: 34rpx;
-  color: #007aff;
+  height:200rpx;
 }
-
-.uploader-container {
-  width: 100%;
-  height: 400rpx;
-  padding: 20rpx 20rpx 20rpx 0;
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  box-sizing: border-box;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+.goodPics image{
+  width:200rpx;
+  height:200rpx;
+  padding:4rpx
 }
-
-.uploader-image {
-  width: 100%;
-  height: 360rpx;
+.publish_time{
+  margin:20rpx 0;
+  height:60rpx;
+  line-height: 60rpx;
+  float:left;
 }
-
-.tunnel {
-  padding: 0 0 0 40rpx;
-}
-
-.tunnel-text {
+.leave_msg{
+  float:left;
+  height:60rpx;
+  line-height: 60rpx;
   position: relative;
-  color: #222;
+}
+.leave_msg image{
+  width:38rpx;
+  height:30rpx;
+  vertical-align: middle;
+  margin:30rpx 0 0 20rpx;
+}
+.leave_msg view{
+  padding:4rpx;
+  position: absolute;
+  right:-10rpx;
+  top:24rpx;
+  width:16rpx;
+  height:16rpx;
+  background: orange;
+  color:white;
+  text-align: center;
+  line-height: 16rpx;
+  border-radius: 50%;
+  font-size: 16rpx;
+}
+/*商品描述*/
+.goodNameAndDesc{
+  width:100%;
+  height:70rpx;
   display: flex;
   flex-direction: row;
-  align-content: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
-
-.tunnel-text:first-child {
-  border-top: none;
+.goodNameAndDesc .goodName{
+  width:200rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  line-height: 60rpx;
 }
-
-.tunnel-switch {
-  position: absolute;
-  right: 20rpx;
-  top: -2rpx;
+.goodNameAndDesc .goodDesc{
+  width: 500rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-left:20rpx;
+  line-height: 64rpx;
 }
-
-.disable {
-  color: #888;
+/*价格等*/
+.priceEtc{
+  width:100%;
+  height:60rpx;
 }
+.priceEtc .icon{
+  color:red;
+  font-size:9px;
+}
+.priceEtc .price{
+  color:red;
+  font-size: 16px;
+}
+.priceEtc .tel{
+  float:right;
+}
+.priceEtc .telicon{
+  width:40rpx;
+  height:40rpx;
+  float:right;
+}
+scorllview{
+  height:100%;
+}
+.tip{
+  height:30px;
+  line-height:30px;
+  text-align:center;
+}
+.filter{
+  width:100rpx;
+  height:100rpx;
+  position:fixed;
+  right:50rpx;
+  bottom:50rpx;
+  background:green;
+  border-radius:50%;
+  text-align: center;
+  line-height: 100rpx;
+  color:white;
+  font-size: 13px;
+  z-index: 999;
+  letter-spacing: 6rpx;
+}
+.classifyDetailName{
+  width:100%;
+  line-height: 70rpx;
+  height:70rpx;
+  float:left;
+  text-align: left;
+  border-bottom:1px solid #ddd;
+  margin-bottom:20rpx;
+}
+.search{
+  width: 100%;
+  height:60rpx;
+  border:1px solid #ddd;
+  margin-bottom:5px;
+  border-radius: 3px;
+}
+.search input{
+  line-height: 60rpx;
+  padding-left:2%;
+  width:78%;
+  float:left;
+}
+.search .searchBtn{
+  color:white;
+  float:left;
+  width:20%;
+  background:green;
+  text-align: center;
+  line-height: 60rpx;
+  letter-spacing: 6rpx;
+}
+.adminTab{
+  width:100%;
+}
+.adminTab .freezingAccount{
+  width:120rpx;
+  padding:5rpx;
+  float:left;
+  margin:0 5rpx 5rpx 5rpx;
+  border:1px solid #111;
+  text-align: center;
+}
+.adminTab .downCurGood{
+  width:120rpx;
+  padding:5rpx;
+  float:left;
+  margin:0 5rpx 5rpx 5rpx;
+  border:1px solid #111;
+  text-align: center;
+}
+/*排序*/
+.sort{
+  width:100%;
+  height:60rpx;
+  border:0;
+}
+.sort view{float:left;height:60rpx;line-height: 60rpx;margin:0 10rpx 0 -1px;border:1px solid #ddd;padding:0 20rpx 0 20rpx;}
 
-.service {
+.authContainer{
+  width:300rpx;
+  height:50rpx;
+  border:1px solid green;
   position: fixed;
-  right: 40rpx;
-  bottom: 40rpx;
-  width: 140rpx;
-  height: 140rpx;
-  border-radius: 50%;
-  background: linear-gradient(#007aff, #0063ce);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  transition: all 300ms ease;
-}
-
-.service-button {
-  position: absolute;
-  top: 40rpx;
-}
-
-.service:active {
-  box-shadow: none;
-}
-
-.request-text {
-  padding: 20rpx 0;
-  font-size: 24rpx;
-  line-height: 36rpx;
-  word-break: break-all;
+  top:300rpx;
+  background:green;
 }

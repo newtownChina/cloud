@@ -1,18 +1,47 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/userConsole/userConsole",
-    "pages/storageConsole/storageConsole",
-    "pages/databaseGuide/databaseGuide",
-    "pages/addFunction/addFunction",
-    "pages/deployFunctions/deployFunctions",
-    "pages/chooseLib/chooseLib"
+    "pages/push/push",
+    "pages/edit/edit",
+    "pages/classify/classify",
+    "pages/index-classify/index-classify",
+    "pages/myself/myself",
+    "pages/myselfitem-bought/myselfitem-bought",
+    "pages/myselfitem-wanted/myselfitem-wanted",
+    "pages/myselfitem-publish/myselfitem-publish",
+    "pages/myselfitem-selled/myselfitem-selled",
+    "pages/myselfitem-userAdmin/myselfitem-userAdmin",
+    "pages/index-good-detail/index-good-detail",
+    "pages/phoneReg/phoneReg",
+    "pages/order/order",
+    "pages/contact/contact",
+    "pages/auth/auth",
+    "pages/transport/transport",
+    "pages/transport_query/transport_query",
+    "pages/nim/nim",
+    "pages/nimlist/nimlist"
   ],
+  "tabBar": {
+    "position": "top",
+    "list": [
+      {
+        "pagePath":"pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/push/push",
+        "text": "发布"
+      },
+      {
+        "pagePath": "pages/myself/myself",
+        "text": "我的"
+      }
+    ]
+  },
   "window": {
-    "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "云开发 QuickStart",
-    "navigationBarTextStyle": "black"
+    "navigationBarBackgroundColor": "#111",
+    "navigationBarTitleText": "居奇屋",
+    "navigationBarTextStyle": "dark"
   }
 }

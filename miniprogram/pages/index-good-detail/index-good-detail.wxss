@@ -1,0 +1,289 @@
+Page {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 100%;
+  margin: 0;
+  padding: 0 20rpx;
+  font-size: 12px;
+  margin-bottom:50px;
+}
+
+.good {
+  width: 100%;
+  margin: 5px;
+}
+
+.userInfo {
+  width: 100%;
+  height: 140rpx;
+  display: flex;
+}
+
+.userPhoto {
+  width: 120rpx;
+  height: 120rpx;
+  float: left;
+}
+
+.userPhoto image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+}
+
+.userName {
+  margin: 15px;
+  float: left;
+  font-size: 13px;
+}
+
+.goodPics {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 200rpx;
+}
+
+.goodPics image {
+  width: 200rpx;
+  height: 200rpx;
+  padding: 4rpx;
+}
+
+.publish_time {
+  margin: 20rpx 0;
+}
+
+/*商品描述*/
+
+.goodNameAndDesc {
+  width: 100%;
+}
+
+.goodNameAndDesc .goodName {
+  word-break: break-word;
+}
+
+.goodNameAndDesc .goodDesc {
+  word-break: break-word;
+}
+
+/*价格等*/
+
+.priceEtc {
+  width: 100%;
+  height: 60rpx;
+}
+
+.priceEtc .icon {
+  color: red;
+  font-size: 9px;
+}
+
+.priceEtc .price {
+  color: red;
+  font-size: 16px;
+}
+
+.priceEtc .tel {
+  float: right;
+}
+
+.priceEtc .telicon {
+  width: 40rpx;
+  height: 40rpx;
+  float: right;
+}
+
+scorllview {
+  height: 100%;
+}
+/*留言区*/
+.leftMessage{
+  margin-bottom:50px;
+}
+.leftMessage .item{
+  /*因为name_message:float,为了保持文档流*/
+  float:left;
+  min-height:50px;
+}
+.leftMessage .resp_item{
+  float:left;
+  min-height:50px;
+  margin-left:60rpx;
+  margin-top:10rpx;
+}
+.leftMessage .item .avatar_url,
+.leftMessage .resp_item .avatar_url{
+  float:left;
+}
+.leftMessage .item .name_message,
+.leftMessage .resp_item .name_message{
+  float:left;
+  margin-left:10rpx;
+  border-bottom: 1px solid #ddd;
+  padding-bottom:5px;
+}
+.leftMessage .name_message .time{
+  float:right;
+}
+.leftMessage .item .name_message .leave_message{
+  width:600rpx;
+  word-break: break-word;
+}
+.leftMessage .resp_item .name_message .leave_message{
+  width:542rpx;
+  word-break: break-word;
+}
+.leftMessage .item .avatar_url image,
+.leftMessage .resp_item .avatar_url image{
+  width:60rpx;
+  height:60rpx;
+  border-radius: 50%;
+}
+.delBtn{
+  width:30px;
+  height:20px;
+  line-height: 20px;
+  text-align: center;
+  border:1px solid #ddd;
+  float:right;
+  margin:0 8rpx;
+}
+.bottom {
+  width: 100%;
+  height: 80rpx;
+  position: fixed;
+  bottom: 0;
+  box-shadow: 0 -2px 2px #ddd;
+  background:white;
+  z-index:999;
+}
+
+.bottom>view {
+  text-align: center;
+  line-height: 80rpx;
+  float: left;
+}
+
+.bottom .wanted, .bottom .leaveMessage {
+  font-size: 10px;
+  width: 15%;
+}
+
+.bottom .wanted > view, .bottom .leaveMessage > view {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.wanted_icon {
+  height:40rpx;
+}
+.wanted_icon image{
+  width:38rpx;
+  height:40rpx;
+}
+
+.wanted_text {
+  height:40rpx;
+  line-height: 40rpx;
+}
+
+.leaveMessage_icon {
+  height:40rpx;
+  
+}
+.leaveMessage_icon image{
+  width:32rpx;
+  height:32rpx;
+  margin-bottom:2px;
+}
+.leaveMessage_text {
+  height:40rpx;
+  line-height: 40rpx;
+}
+
+.bottom .contactSeller, .bottom .buyNow {
+  width: 35%;
+}
+
+.bottom .contactSeller view,.bottom .buyNow view{
+  color: white;
+  width: 80%;
+  height: 60rpx;
+  margin: 5px auto;
+  line-height: 60rpx;
+  justify-content: center;
+  background: #ff7f00;
+}
+.bottom .buyNow view {
+  background: #ff2d2d;
+}
+/*留言*/
+.leftMessage{
+  border-top:1px solid #ddd;
+  padding: 5px;
+}
+.leaveMessagePane{
+  background: white;
+  z-index: 999;
+  position:fixed;
+  left:0;
+  bottom:0;
+  width: 100%;
+  height:80rpx;
+  box-shadow: 0 -2px 2px white;
+}
+.leaveMessagePane>view{
+  float:left;
+}
+.leaveMessagePane .hideBtn{
+  position:absolute;
+  right:0;
+  top:-50rpx;
+  height:50rpx;
+  width:150rpx;
+  background:#ddd;
+  text-align: center;
+}
+.leaveMessagePane .hideBtn image{
+  width: 50rpx;
+  height:50rpx;
+  margin:0 auto;
+}
+.leaveMessagePane .userPhoto{
+  width:100rpx;
+  height:80rpx;
+  border-radius:50%;
+}
+.leaveMessagePane .userPhoto image{
+  width:80rpx;
+  height:80rpx;
+  margin:0 10rpx;
+}
+.leaveMessagePane .msgInput{
+  width:500rpx;
+  height:80rpx;
+  background:#ddd;
+  border-radius:2px;
+}
+.leaveMessagePane .msgInput input{
+  width:480rpx;
+  height:80rpx;
+  margin:0 10rpx;
+}
+.leaveMessageBtn{
+  width:150rpx;
+  height:80rpx;
+  margin:0 auto;
+  z-index:9;
+  color:white;
+  font-size:15px;
+  text-align: center;
+  line-height: 80rpx;
+  background:#ff2d2d;
+}
+

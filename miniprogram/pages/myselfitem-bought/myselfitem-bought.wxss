@@ -1,0 +1,152 @@
+Page{
+  margin:0;
+  padding:0;
+}
+.container{
+  width:100%;
+  height:100%;
+  margin:0;
+  padding:0 20rpx;
+  font-size:12px;
+}
+.title{
+  float:left;
+  text-align: left;
+}
+.good{
+  width:100%;
+  border-bottom:1px solid #ddd;
+  margin:5px;
+}
+.userInfo{
+  width:100%;
+  height:140rpx;
+  display: flex;
+}
+.userPhoto{
+  width:120rpx;
+  height:120rpx;
+  float:left;
+}
+.userPhoto image{
+  width:120rpx;
+  height:120rpx;
+  border-radius: 50%;
+}
+.userName{
+  margin:15px;
+  float:left;
+  font-size: 13px;
+}
+.goodPics{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height:200rpx;
+}
+.goodPics image{
+  width:200rpx;
+  height:200rpx;
+  padding:4rpx
+}
+/*商品描述*/
+.goodNameAndDesc{
+  width:100%;
+  height:70rpx;
+  display: flex;
+  flex-direction: row;
+}
+.goodNameAndDesc .goodName{
+  width:200rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  line-height: 60rpx;
+}
+.goodNameAndDesc .goodDesc{
+  width: 500rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-left:20rpx;
+  line-height: 64rpx;
+}
+/*价格等*/
+.priceEtc{
+  width:100%;
+  height:60rpx;
+}
+.priceEtc .tel{
+  float:right;
+}
+.telicon{
+  width:40rpx;
+  height:40rpx;
+  float:right;
+}
+.priceEtc .receiveGood{
+  float:right;
+  border:1px solid #111;
+  width:120rpx;
+  padding:5rpx;
+  margin:0 10rpx;
+  text-align: center;
+}
+.operation{
+  width:100%;
+  height:80rpx;
+}
+.priceEtc .icon{
+  color:red;
+  font-size:9px;
+}
+.priceEtc .price{
+  color:red;
+  font-size: 16px;
+}
+.operation .edit,.operation .offline,.operation .del,.operation .show_detail{
+  width:120rpx;
+  padding:5rpx;
+  float:left;
+  margin:20rpx;
+  border:1px solid #111;
+  text-align: center;
+}
+scorllview{
+  height:100%;
+}
+.tip{
+  height:30px;
+  line-height:30px;
+  text-align:center;
+}
+.nav{
+  width:100%;
+  height:80rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-bottom:1px solid #ddd;
+  margin-bottom:10rpx;
+}
+.nav view{
+  height:80rpx;
+  line-height: 90rpx;
+  margin:20rpx;
+  font-size:13px;
+}
+.order_id{
+  width:16px;
+  height:16px;
+}
+.order_id_text{
+  color:#2DA4E2;
+}
+.not_pay{
+  color:#f4c55f ;
+}
+.has_pay{
+  color:#00b26a;
+}

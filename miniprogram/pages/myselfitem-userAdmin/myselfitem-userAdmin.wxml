@@ -1,0 +1,20 @@
+<!--pages/myselfitem-userAdmin/userAdmin.wxml-->
+<view class="nav">
+  <view>用户管理</view>
+</view>
+<view class="container">
+  <block wx:for="{{users}}" wx:for-item="user">
+    <view class="user">
+      <view class="avatar_url">
+        <image src="{{user.avatar_url}}" width="20" height=" 20"></image>
+      </view>
+      <view class="nick_name"><text>{{user.nick_name}}</text></view>
+      <view class="telphone"><text>{{user.telphone}}</text></view>
+      <view class="switch">
+        <text>冻结账号:</text>
+        <switch data-telphone="{{user.telphone}}" checked="{{user.ifFreezing}}" bindchange="switchChange"/>
+      </view>
+    </view>
+  </block>
+  <view class="tip">{{tip}}</view>
+</view>

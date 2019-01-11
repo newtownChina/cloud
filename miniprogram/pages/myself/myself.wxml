@@ -1,0 +1,48 @@
+<!--pages/myself/myself.wxml-->
+<view class="container">
+  <view class="userInfo">
+    <image wx:if="{{userInfo!=null}}" bindtap="login" src="{{userInfo.avatarUrl}}"></image>
+    <text wx:if="{{userInfo!=null}}">{{userInfo.nickName}}</text>
+    <view class='authority'>
+        <button class="finger" wx:if="{{userInfo==null||!storedPhoneNum}}"><image src="../../images/finger.png"/></button>
+        <button wx:if="{{userInfo==null}}" class="btn" open-type="getUserInfo" bindgetuserinfo='getUserInfo'><image src="../../images/weixin48.png" /></button>
+        <button wx:if="{{!storedPhoneNum}}" class="btn" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"><image src="../../images/weixin48.png" />    
+    </button>
+    </view>
+  </view>
+  <view class="userItem">
+    <!-- <view class="msgNotify" bindtap="navigateToMsgList">
+        <text class="item">消息通知</text>
+        <text class="msgNotifyIcon">{{msgCount}}</text>
+        <text class="gt">></text>
+    </view> -->
+    <view class="published" bindtap="navigateToPublish">
+      <text class="item">我发布的</text>
+      <text class="gt">></text>
+    </view>
+    <view class="selled" bindtap="navigateToSelled">
+      <text class="item">我卖出的</text>
+      <text class="gt">></text>
+    </view>
+    <view class="wanted" bindtap="navigateToWanted">
+      <text class="item">我想要的</text>
+      <text class="gt">></text>
+    </view> 
+    <view class="bought" bindtap="navigateToBought">
+      <text class="item">我买到的</text>
+      <text class="gt">></text>
+    </view>
+    <view class="bought" bindtap="navigateToContact">
+      <text class="item">联系我们/侵权投诉</text>
+      <text class="gt">></text>
+    </view>
+    <view wx:if="{{ifAdmin=='true'}}" class="admin" bindtap="navigateToUserAdmin">
+      <text class="item">用户管理</text>
+      <text class="gt">></text>
+    </view>
+    <view wx:if="{{ifAdmin=='true'}}" class="admin" bindtap="navigateToComplaintAdmin">
+      <text class="item">投诉管理</text>
+      <text class="gt">></text>
+    </view>
+  </view>
+</view>

@@ -1,43 +1,63 @@
-<!--index.wxml-->
+<!-- <scroll-view scroll-y  style="height:{{windowHeight}}px;"> -->
 <view class="container">
-
-  <!-- 用户 openid -->
-  <view class="userinfo">
-    <button 
-      open-type="getUserInfo" 
-      bindgetuserinfo="onGetUserInfo"
-      class="userinfo-avatar"
-      style="background-image: url({{avatarUrl}})"
-    ></button>
-    <view>
-      <button class="userinfo-nickname" bindtap="onGetOpenid">点击获取 openid</button>
+  <!-- <view class="title">
+      <text>在售宝贝</text>
+    </view> -->
+  <!-- <view bindtap='zhifu1fen'>支付1分</view> -->
+  <view class="classifyDetailName">
+    当前>{{indexClassifyDetailName}}
+  </view>
+  <view class="search">
+    <input type="text" bindblur="getKeyword"/>
+    <view class="searchBtn" bindtap="searchKeyword">搜一下</view>
+  </view>
+  <view class="sort">
+    <view class="sortType" data-id="tim" bindtap='changeSortWay' style='background:{{tim_bg_color}};color:{{tim_color}}'>最新发布↑↓</view>
+    <view class="sortType" data-id="pri" bindtap='changeSortWay' style='background:{{pri_bg_color}};color:{{pri_color}}'>价格↑↓</view>
+    <view class="sortType" data-id="hot" bindtap='changeSortWay' style='background:{{hot_bg_color}};color:{{hot_color}}'>热度↑↓</view>
+    <view class="sortType" data-id="sum" bindtap='changeSortWay' style='background:{{sum_bg_color}};color:{{sum_color}}'>综合↑↓</view>
+  </view>
+  <block wx:for="{{goods}}" wx:for-item="good" wx:key="id">
+    <view class="good" bindtap="navigateToGoodDetail" data-good="{{good}}">
+      <view class="userInfo">
+        <view class="userPhoto">
+          <image src="{{good.avatar}}"></image>
+        </view>
+        <view class="userName">
+          <text>{{good.nick}}</text>
+        </view>
+      </view>
+      <scroll-view scroll-x>
+        <view class="goodPics">
+          <block wx:for="{{good.pics}}" wx:for-item="img_url" wx:key="*this">
+            <view>
+              <image bindtap="previewImg" data-src="{{img_url}}" src="{{img_url}}" mode="aspectFill"></image>
+            </view>
+          </block>
+        </view>
+      </scroll-view>
+      <view class="goodNameAndDesc">
+        <text class="goodName">{{good.name}}</text>
+        <text class="goodDesc">{{good.desc}}</text>
+      </view>
+      <view class="priceEtc">
+        <text class="icon">￥</text>
+        <text class="price">{{good.prc_s}}</text>
+        <text class="price" style="text-decoration:line-through;font-size:22rpx;margin-left:20rpx;">原价:￥{{good.prc_b}}</text>
+        <!--
+        <text class="tel" data-phone="{{good.telphone}}" bindtap="phoneCall">:{{good.telphone}}</text>
+        <image class="telicon" src="/images/tel.png"></image>
+        -->
+      </view>
+      <view class="publish_time">发布时间:{{good.pub_dt}}</view>  
+      <view class="leave_msg">
+        <view>{{good.msg}}</view>
+        <image width="10" height="8" src="/images/ly.jpg"></image>
+      </view>
     </view>
-  </view>
-
-
-  <!-- 上传图片 -->
-  <view class="uploader">
-    <view class="uploader-text" bindtap="doUpload">
-      <text>上传图片</text>
-    </view>
-    <view class="uploader-container" wx:if="{{imgUrl}}">
-      <image class="uploader-image" src="{{imgUrl}}" mode="aspectFit" bindtap="previewImg"></image>
-    </view>
-  </view>
-
-
-  <!-- 操作数据库 -->
-  <view class="uploader">
-    <navigator url="../databaseGuide/databaseGuide" open-type="navigate" class="uploader-text">
-      <text>前端操作数据库</text>
-    </navigator>
-  </view>
-
-  <!-- 新建云函数 -->
-  <view class="uploader">
-    <navigator url="../addFunction/addFunction" open-type="navigate" class="uploader-text">
-      <text>快速新建云函数</text>
-    </navigator>
-  </view>
-
+  </block>
+  <view class="tip">{{tip}}</view>
 </view>
+<!-- <button open-type='getUserInfo' bindgetuserinfo="getUserInfo">授权 </button> -->
+<view class="filter" bindtap="chooseClassify">挑选</view>
+<!-- </scroll-view> -->

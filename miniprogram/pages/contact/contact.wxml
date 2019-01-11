@@ -1,0 +1,9 @@
+<view class="container">
+  <view class="title">
+    <view class="online">联系我们</view>
+  </view>
+  <view><text>E-mail:feiduomukeji@sina.com</text></view>
+  <view>点击图片扫描二维码</view>
+  <image src="../../images/qun.png" class="qunimage" bindtap="saveQrCode" />
+  <view>新乡医学院二手交易群（608805698）</view>
+</view>

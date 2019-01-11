@@ -1,0 +1,144 @@
+/*导入出价面板的css*/
+@import "pricegiven.wxss"
+/*push.css*/
+::-webkit-scrollbar{
+  color:white;
+  background:white;
+}
+Page{
+  height:100%;
+  width:100%;
+  padding:0;
+  margin:0;
+}
+.container {
+  width: 100%;
+  height: 100%;
+  padding: 20rpx;
+}
+
+.addPic {
+  display: flex;
+  width: 100%;
+  height: 200rpx;
+  margin-bottom: 20rpx;
+}
+
+.picwrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 200rpx;
+  height: 200rpx;
+  background: #efefef;
+}
+
+.addPic .picwrapper image {
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.addPic .picwrapper text {
+  width: 200rpx;
+  height: 60rpx;
+  font-size: 13px;
+  text-align: center;
+}
+.addPic .picpreview{
+  width:200rpx;
+  height:200rpx;
+  position: relative;
+}
+.addPic .picpreview image{
+  width:200rpx;
+  height:200rpx;
+}
+.addPic .picpreview icon{
+  width:20px;
+  height:20px;
+  color:#111;
+  position: absolute;
+  bottom:0;
+  right:0;
+  border-radius:50%;
+  border:1px solid white;
+  background:white;
+}
+.desc {
+  width: 100%;
+  height: 300rpx;
+  margin-top: 30rpx;
+}
+
+.desc input {
+  font-size: 12px;
+  padding: 3px;
+}
+
+.desc textarea {
+  height:170rpx;
+  font-weight: 100;
+  font-size: 14px;
+  letter-spacing: 2px;
+  border-top: 1px solid #aaa;
+  padding: 3px;
+}
+
+.desc text {
+  float: right;
+}
+
+.position {
+  width: 100%;
+  height: 100rpx;
+  margin-bottom: 20rpx;
+  line-height: 100rpx;
+}
+.position view{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.position view image{
+  width:40rpx;
+  height:40rpx;
+}
+.fontsize12{
+   font-size: 12px;
+}
+.info {
+  width: 100%;
+  height: 300rpx;
+}
+.info .infoItem {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 14px;
+}
+.borderBottom{
+  border-bottom:1px solid #ddd;
+}
+
+
+.pushBtn {
+  width: 94%;
+  height: 60rpx;
+  background: green;
+  text-align: center;
+  line-height: 60rpx;
+  color: white;
+  margin: 0 auto;
+}
+
+.gt {
+  float: right;
+  margin-right: 10rpx;
+  font-size: 14px;
+  line-height: 70rpx;
+  color: #aaa;
+}
+.gt input{
+  float:right;
+}

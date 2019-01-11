@@ -1,0 +1,118 @@
+<view class="container">
+  <view class="good" data-good="{{good}}">
+    <view class="userInfo">
+      <view class="userPhoto">
+        <image src="{{good.avatar}}"></image>
+      </view>
+      <view class="userName">
+        <text>{{good.nick}}</text>
+      </view>
+    </view>
+    <scroll-view scroll-x>
+      <view class="goodPics">
+        <block wx:for="{{good.pics}}" wx:for-item="img_url">
+          <view>
+            <image bindtap="previewImg" data-src="{{img_url}}" src="{{img_url}}" mode="aspectFill"></image>
+          </view>
+        </block>
+      </view>
+    </scroll-view>
+    <view class="priceEtc">
+      <text class="icon">￥</text>
+      <text class="price">{{good.prc_s}}</text>
+      <text class="price" style="text-decoration:line-through;font-size:22rpx;margin-left:20rpx;">原价:￥{{good.prc_b}}</text>
+      <!--
+      <text class="tel" data-phone="{{good.telphone}}" bindtap="phoneCall">:{{good.telphone}}</text>
+      <image class="telicon" src="/images/tel.png"></image>-->
+    </view>
+    <view class="goodNameAndDesc">
+      <view class="goodName">{{good.good_name}}</view>
+      <view class="goodDesc">{{good.good_desc}}</view>
+    </view>
+
+    <view class="publish_time">发布时间:{{good.pub_dt}}</view>
+    <view class="leftMessage">
+      <view wx:if="{{good.msg.length < 1}}">暂无留言</view>
+      <block wx:for="{{good.msg}}" wx:for-item="item">
+        <!--留言留言留言留言留言留言留言-->
+        <view class="item">
+          <view class="avatar_url">
+            <image src="{{item.avatar}}" />
+          </view>
+          <view class="name_message">
+            <view class="nick_name">
+              <text>{{item.nick}}</text>
+              <text class="time">{{"留言时间"}}</text>
+            </view>
+            <!-- <view>{{item.telphone}}</view> -->
+            <view class="leave_message">{{item.msg_txt}}</view>
+            <view  class="item_oper">
+              <!--商品是我发布的，但是留言不是我的，则显示回复按钮-->
+              <view class="delBtn" wx:if="{{good.telphone == telphone && item.telphone != telphone}}" data-id="{{item.id}}" bindtap="showRespLeaveMessagePane"> 回复 </view>
+              <!--说明是我发布的，则显示删除按钮-->
+              <view class="delBtn" wx:if="{{item.telphone==telphone}}" data-id="{{item.id}}" bindtap="deleteLeaveMessage"> 删除 </view>
+            </view>
+          </view>
+        </view>
+        <!--针对当前留言item的主人回复-->
+        <view wx:if="{{item.msg_resp}}" class="resp_item">
+          <view class="avatar_url">
+            <image src="{{good.avatar}}" />
+          </view>
+          <view class="name_message">
+            <view class="nick_name">
+              <text>{{good.nick}}</text>
+              <text class="time">{{"回复时间"}}</text>
+            </view>
+            <view class="leave_message">
+              {{item.msg_resp}}
+            </view>
+            <!--我是卖家，则可以删除我对游客的回复内容,注意不是删除游客的留言-->
+            <view class="item_oper">
+              <view class="delBtn" wx:if="{{good._openid==openid}}" data-id="{{respItem.id}}" bindtap="deleteRespLeaveMessage"> 删除 </view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>
+
+<!--底部-->
+<view class="bottom">
+  <view class="wanted">
+    <view bindtap="wanted">
+      <view class="wanted_icon">
+        <image src="../../images/{{wanted_icon}}" />
+      </view>
+      <view class="wanted_text">想要</view>
+    </view>
+  </view>
+  <view class="leaveMessage">
+    <view bindtap="showLeaveMessagePane">
+      <view class="leaveMessage_icon">
+        <image src="../../images/{{leaveMessage_icon}}" />
+      </view>
+      <view class="leaveMessage_text">留言</view>
+    </view>
+  </view>
+  <view class="contactSeller">
+    <view bindtap='contactSeller' data-good="{{good}}">联系卖家</view>
+  </view>
+  <view class="buyNow" bindtap="buyNowBtn" data-good="{{good}}">
+    <view>马上买</view>
+  </view>
+</view>
+<!--留言输入框-->
+<view class="leaveMessagePane" hidden="{{weatherHidePane}}">
+  <view class="hideBtn" bindtap="closePane">
+    <image src="/images/down.png" width="50" height="30" />
+  </view>
+  <view class="userPhoto">
+    <image src="{{userInfo.avatarUrl}}" />
+  </view>
+  <view class="msgInput">
+    <input name="leaveMessage" maxlength="150" bindblur="getLeaveMessage" placeholder="有想法就说,看对眼就上..." focus="{{focus}}"/>
+  </view>
+  <view class="leaveMessageBtn" bindtap="submitLeaveMessage">{{submitBtnText}}</view>
+</view>

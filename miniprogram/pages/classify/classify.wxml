@@ -1,0 +1,17 @@
+<!--pages/classify/classify.wxml-->
+<view class="container">
+  <view class="left">
+    <scroll-view scroll-y style="height:100%">
+      <block wx:for="{{classifyArray}}" wx:for-item="classifyName">
+        <view class="item" data-name="{{classifyName}}"    bindtap="showClassifyDetail">{{classifyName}}</view>
+      </block>
+    </scroll-view>
+  </view>
+  <view class="right">
+    <scroll-view scroll-y style="height:100%">
+      <block wx:if="{{classifyDetail}}" wx:for="{{classifyDetail}}" wx:for-item="classifyDetailName">
+        <view class="item" data-detailname="{{classifyDetailName}}"    bindtap="setClassifyDetailName">{{classifyDetailName}}</view>
+      </block>
+       </scroll-view>
+  </view>
+</view>
