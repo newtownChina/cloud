@@ -12,6 +12,7 @@ Page({
     leaveMessage:null,
     leaveMessage_icon:"leaveMessage.png",
     leave_messages:[],
+    wanted_flag:false,
     weatherHidePane: true, //默认隐藏
     openid: wx.getStorageSync("openid")
   },
@@ -32,37 +33,7 @@ Page({
       telphone: telphone,
       good, good
     })
-
-    /*查询当前商品是否为我想要的,以设置收藏图标的颜色*/
-    var that = this
-    return
-    if (telphone) {//如果手机号存在，则查询
-      console.log("手机号存在")
-      wx.request({
-        url: config.host + 'queryWeatherInWanted.jsp',
-        data: {
-          telphone: this.data.telphone,
-          g_id: g_id
-        },
-        success: function (res) {
-          console.log(res.data)
-          /*默认是nowanted.png，如果是已经加入我想要了，则变为wanted.png*/
-          if (res.data.trim() == "hasInWanted") {
-            that.setData({
-              wanted_icon: "wanted.png"
-            })
-          }
-        },
-        fail: function (res) {
-          console.log(res.data)
-        }
-      })
-    } else {
-      console.log("手机号还不存在")
-    }
-    this.setData({
-      good: good
-    })
+    this.hasWanted()
   },
   onShow: function () {
     var that = this
@@ -72,25 +43,79 @@ Page({
   
   /*生命周期事件 结束*/ 
   /*自定义事件 开始 */
-  wanted: function () {
+  wanted:async function () {
     var id = this.data.good._id
     var openid = this.data.openid
     var that = this
     db.collection("user").where({
-      _openid:openid
+      _openid: openid
     })
     .get()
-    .then(res=>{
+    .then(res => {
       var u_id = res.data[0]._id
       console.log(u_id)
-      db.collection("user").doc(u_id).update({
-        data: {
-          want: _.push([id])
+      if (that.data.wanted_flag){//已经收藏，此时点击则取消收藏
+        db.collection("user").where({
+          _openid: that.data.openid
+        })
+        .get()
+        .then(res => {
+          console.log(res)
+          var want = res.data[0].want
+          var length = want.length
+          for(var i = 0;i < length;i++){
+            var index = want.indexOf(id)
+            if (index > -1) {
+              want.splice(index, 1)
+            }
+          } 
+          db.collection("user").doc(u_id).update({
+            data: {
+              want: want
+            }
+          })
+          that.setData({
+            wanted_icon: "nowanted.png",
+            wanted_flag:false
+          })
+        })
+      }else{//加入收藏
+        db.collection("user").doc(u_id).update({
+          data: {
+            want: _.push([id])
+          }
+        })
+        that.setData({
+          wanted_icon: "wanted.png",
+          wanted_flag:true
+        })
+      }
+    })
+  },
+  hasWanted:function(){
+    /*查询当前商品是否为我想要的,以设置收藏图标的颜色*/
+    var that = this
+    var id = this.data.good._id
+    db.collection("user").where({
+      _openid: that.data.openid
+    })
+    .get()
+    .then(res => {
+      console.log(res)
+      var want = res.data[0].want
+      for (var i in want) {
+        if (id == want[i]) {
+          that.setData({
+            wanted_icon: "wanted.png",
+            wanted_flag:true,
+            want_arr: want
+          })
+          break;
         }
-      })
-      that.setData({
-        wanted_icon: "wanted.png"
-      })
+      }
+    })
+    .catch(err=>{
+      console.log(err)
     })
   },
   getLeaveMessage: function (e) {
@@ -144,7 +169,7 @@ Page({
               avatar: avatarUrl,
               msg_txt: leaveMessage,
               openid: openid,
-              msg_dt:new Date()
+              msg_dt: util.formatTime(new Date()) 
             }])
           }
         })
@@ -190,7 +215,7 @@ Page({
       that.queryLeaveMessage(id)
     })
     .catch(err=>{
-
+      console.log(err)
     })
   },
   queryLeaveMessage:function(id){

@@ -28,9 +28,7 @@ Page({
       return
     } else {
       //表明已经登录
-      /*
       wx.request({
-        url: config.host+'showIwanted.jsp',
         data:{
           telphone: this.data.storedPhoneNum
         },
@@ -42,7 +40,7 @@ Page({
         fail:function(){
           console.log("未能成功获取到我想要的商品")
         }
-      })*/
+      })
     }
   },
   navigateToGoodDetail: function (e) {

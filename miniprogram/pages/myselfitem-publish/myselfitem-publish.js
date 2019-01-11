@@ -17,7 +17,7 @@ Page({
     storedPhoneNum: wx.getStorageSync("storedPhoneNum"),
     openid: wx.getStorageSync("openid")
   },
-  /*声明周期事件 开始*/
+  /*生命周期事件 开始*/
   onLoad: function (options) {},
   onShow: function () {
     this.setData({

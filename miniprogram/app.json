@@ -12,14 +12,10 @@
     "pages/myselfitem-selled/myselfitem-selled",
     "pages/myselfitem-userAdmin/myselfitem-userAdmin",
     "pages/index-good-detail/index-good-detail",
-    "pages/phoneReg/phoneReg",
     "pages/order/order",
     "pages/contact/contact",
-    "pages/auth/auth",
     "pages/transport/transport",
-    "pages/transport_query/transport_query",
-    "pages/nim/nim",
-    "pages/nimlist/nimlist"
+    "pages/transport_query/transport_query"
   ],
   "tabBar": {
     "position": "top",

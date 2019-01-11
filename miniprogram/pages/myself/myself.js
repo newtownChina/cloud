@@ -5,8 +5,8 @@ Page({
     userInfo:null,
     ifAdmin:false
   },
+  /*生命周期事件 开始 */
   onLoad: function (options) {
-    console.log("onlaod")
     this.setData({
       userInfo: app.globalData.userInfo
     })
@@ -32,8 +32,10 @@ Page({
       storedPhoneNum: wx.getStorageSync("storedPhoneNum"),
       ifAdmin: wx.getStorageSync("ifAdmin") != "" ? wx.getStorageSync("ifAdmin") : this.data.ifAdmin
     })
-    
   },
+  /*生命周期事件 结束 */
+
+  /*自定义事件 开始 */
   navigateToMsgList: function () {
     wx.navigateTo({
       url: "/pages/nimlist/nimlist",
@@ -128,11 +130,6 @@ Page({
       })
     }
     console.log(res)
-  },
-  onUnload:function(){
-    
-  },
-  onHide:function(){
-
   }
+  /*自定义事件 结束 */
 })

@@ -5,7 +5,7 @@
     </view> -->
   <!-- <view bindtap='zhifu1fen'>支付1分</view> -->
   <view class="classifyDetailName">
-    当前>{{indexClassifyDetailName}}
+    当前>{{detailName}}
   </view>
   <view class="search">
     <input type="text" bindblur="getKeyword"/>
@@ -51,7 +51,7 @@
       </view>
       <view class="publish_time">发布时间:{{good.pub_dt}}</view>  
       <view class="leave_msg">
-        <view>{{good.msg}}</view>
+        <view>{{good.msg.length}}</view>
         <image width="10" height="8" src="/images/ly.jpg"></image>
       </view>
     </view>

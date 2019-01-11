@@ -17,7 +17,6 @@ Page({
     this.setData({
       userInfo: app.globalData.userInfo
     })
-    console.log("push.js:" + this.data.userInfo.nickName)
   },
   //获取分类页面设置的全局变量，这样从分类页返回时候可以获取值
   onShow: function () {
@@ -179,7 +178,7 @@ Page({
                     pics: good_pics,
                     prc_b: that.data.costPrice,
                     prc_s: that.data.sellPrice,
-                    pub_dt: new Date(),
+                    pub_dt: util.formatTime(new Date()),
                     tel: that.data.storedPhoneNum
                   }
                 }).then(res => {

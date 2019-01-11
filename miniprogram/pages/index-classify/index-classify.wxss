@@ -1,1 +1,35 @@
-/* pages/index-classify/index-classify.wxss */
+/* pages/classify/classify.wxss */
+Page{
+  height:100%;
+}
+::-webkit-scrollbar{
+  color:white;
+  background: white;
+}
+.container{
+  padding:0;
+  width:100%;
+  height:100%;
+  display: flex;
+  flex-direction: row;
+}
+.container .left{
+  width:250rpx;
+  height:100%;
+  background:white;
+  justify-content: center;
+  align-items: center;
+}
+.container .right{
+  width:500rpx;
+  height:100%;
+  background: #f1f1f1;
+}
+.item{
+  width:100%;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin:20px 0;
+  font-size:12px;
+}

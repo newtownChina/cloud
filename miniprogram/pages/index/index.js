@@ -11,9 +11,10 @@ Page({
     goods:[],
     tip:"到底了(∩_∩)!!",
     sortWay:"tim",
-    ifAdmin:false,
+    searchKeyword:"",
     openid:app.globalData.openid
   },
+  /*生命周期事件 开始 */
   onShow: function (options) {
     //默认按照时间倒序排列
     util.changeBgColor("green", "white", "white", "white",this)
@@ -21,25 +22,29 @@ Page({
     if (this.data.showState =="search"){
       return
     }
-    this.data.pageNum = app.globalData.resetPageNum
+    var that = this
+    var indexClassify = wx.getStorageSync("indexClassify");
+    this.data.pageNum = indexClassify.resetPageNum
+    var detailName = indexClassify.detailName
     this.setData({
       tip:"加载中……",
-      //这里的indexClassifyDetailName用户wxml中显示
-      indexClassifyDetailName: app.globalData.indexClassifyDetailName,
-      ifAdmin: wx.getStorageSync("ifAdmin") != "" ? wx.getStorageSync("ifAdmin"):this.data.ifAdmin
+      detailName: detailName
     })
-    console.log("是否为管理员："+this.data.ifAdmin)
-    var that = this
-    console.log("显示内容:" + app.globalData.indexClassifyDetailName)
-    var indexClassifyDetailName = app.globalData.indexClassifyDetailName
-    console.log(!indexClassifyDetailName ? "显示全部" : indexClassifyDetailName)
-    console.log("显示内容:" + app.globalData.indexClassifyDetailName+"pageNum:"+that.data.pageNum)
-    console.log("显示内容:" + app.globalData.indexClassifyDetailName+"count:"+that.data.count)
     var _pageNum = that.data.pageNum
     var _count = that.data.count
     console.log(_pageNum * _count)
-    db.collection('good').where({
-    })
+    var option = {}
+    if (detailName == "全部"){
+      option = { 
+        flag:1
+      }
+    }else{
+      option = {
+        flag: 1,
+        clas: detailName
+      }
+    }
+    db.collection('good').where(option)
     .orderBy('pub_dt', 'desc')
     .skip(_pageNum * _count)
     .limit(_count)
@@ -62,11 +67,12 @@ Page({
           duration: 1000
         })
         //如果没有查到当前分类的数据，还原之前的分类以显示
-        app.globalData.indexClassifyDetailName = app.globalData.oldIndexClassifyDetailName
+        var oldIndexClassify = wx.getStorageSync("indexClassify")
+        wx.setStorageSync("indexClassify", oldIndexClassify)
         that.setData({
           tip: "到底了(∩_∩)!!",
           //刷新分类显示
-          indexClassifyDetailName: app.globalData.indexClassifyDetailName
+          detailName: oldIndexClassify.detailName
         })
       }
     })
@@ -80,44 +86,51 @@ Page({
     //当为搜索状态时的触底
     if (this.data.showState == "search") {
       console.log(this.data.showState)
-      setTimeout(function () {
-        console.log("搜索中……")
-        console.log("页码" + that.data.pageNum)
-        console.log("显示数量" + that.data.count)
-        var _pageNum = that.data.pageNum
-        var _count = that.data.count
-        db.collection('good').where({
-
+      var _pageNum = that.data.pageNum
+      var _count = that.data.count
+      var option = {
+        name: db.RegExp({
+          regexp: "[a-zA-Z0-9]*" + keyword + "[a-zA-Z0-9]*",
+          options: 'i'
         })
-          .orderBy('pub_dt', 'desc')
-          .skip(_pageNum * _count)
-          .limit(_count).get()
-          .then(res => {
-            var showedGoods = that.data.goods;//老数据
-            if (res.data.length == 0) {//新数据
-              that.setData({
-                tip: "到底了(∩_∩)!!"
-              })
-            } else {//有新数据
-              for (var index in res.data) {//追加商品
-                showedGoods.push(res.data[index])
-              }
-              that.setData({
-                goods: util.sortData(showedGoods, that.data.sortWay)
-              })
-            }
+      }
+      db.collection('good').where(option)
+      .orderBy('pub_dt', 'desc')
+      .skip(_pageNum * _count)
+      .limit(_count).get()
+      .then(res => {
+        var showedGoods = that.data.goods;//老数据
+        if (res.data.length == 0) {//新数据
+          that.setData({
+            tip: "到底了(∩_∩)!!"
           })
-      }, 1000)
-      return
+        } else {//有新数据
+          for (var index in res.data) {//追加商品
+            showedGoods.push(res.data[index])
+          }
+          that.setData({
+            goods: util.sortData(showedGoods, that.data.sortWay)
+          })
+        }
+      })
     } else {
       //不是搜索触底
-      var indexClassifyDetailName = app.globalData.indexClassifyDetailName
       var _pageNum = that.data.pageNum
       var _count = that.data.count
       console.log(_pageNum * _count)
-      db.collection('good').where({
-
-      })
+      var indexClassify = wx.getStorageSync("indexClassify")
+      var detailName = indexClassify.detailName
+      if (detailName == "全部") {
+        option = {
+          flag: 1
+        }
+      } else {
+        option = {
+          flag: 1,
+          clas: detailName
+        }
+      }
+      db.collection('good').where(option)
       .orderBy('pub_dt', 'desc')
       .skip(_pageNum * _count)
       .limit(_count).get()
@@ -149,13 +162,23 @@ Page({
       showState:"",//将showState改为默认
       pageNum:0
     })
+    var detailName = wx.getStorageSync("indexClassify").detailName
     var that = this
     wx.showNavigationBarLoading()
-
     var _pageNum = that.data.pageNum
     var _count = that.data.count
-    db.collection('good').where({
-    })
+    var option = {}
+    if (detailName == "全部") {
+      option = {
+        flag: 1
+      }
+    } else {
+      option = {
+        flag: 1,
+        clas: detailName
+      }
+    }
+    db.collection('good').where(option)
     .orderBy('pub_dt', 'desc')
     .skip(_pageNum * _count)
     .limit(_count)
@@ -169,7 +192,6 @@ Page({
         }
         that.setData({
           goods: util.sortData(res.data, that.data.sortWay),
-          indexClassifyDetailName: "显示全部",
           tip: tip
         });
       } else {//一个都没有
@@ -182,6 +204,8 @@ Page({
       wx.stopPullDownRefresh() //停止下拉刷新
     }) 
   },
+  /*生命周期事件 结束 */
+  /*自定义事件 开始 */
   previewImg:function(e){
     wx.previewImage({
       urls: [e.target.dataset.src], // 当前显示图片的http链接
@@ -211,50 +235,48 @@ Page({
     })
   },
   searchKeyword:function(){
+    var that = this
     if(!this.data.keyword){
       wx.showToast({
         title: '请输入内容哦~',
         icon:"loading",
         duration:800
       })
-      return
-    }
-    this.setData({
-      showState:"search",
-      pageNum:0,//当搜索时，要从0开始
-      count:5
-    })
-    var that = this
-    setTimeout(function(){
-      console.log("搜索中……")
-      console.log("页码"+that.data.pageNum)
-      console.log("显示数量"+that.data.count)
-      wx.request({
-        url: config.host+'searchKeyword.jsp',
-        data: {
-          keyword: that.data.keyword,
-          pageNum: that.data.pageNum,
-          count: that.data.count
-        },
-        success: function (res) {
-          if (res.data.length > 0) {
-            that.setData({
-              goods: util.sortData(res.data, that.data.sortWay),
-              tip:"到底了(∩_∩)!!"
-            })
-          } else {//一个都没有
-            wx.showToast({
-              title: '没有相关商品',
-              icon: 'loading',
-              duration: 1000
-            })
-          }
-        },
-        fail: function (res) {
-          console.log(res.data)
+    }else{
+      this.setData({
+        showState: "search",
+        pageNum: 0,//当搜索时，要从0开始
+        count: 5
+      })
+      var keyword = this.data.keyword
+      
+      var option = {
+        name: db.RegExp({
+          regexp: "[a-zA-Z0-9]*" + keyword + "[a-zA-Z0-9]*",
+          options: 'i'
+        })
+      }
+      console.log(option)
+      db.collection("good").where(option)
+      .get()
+      .then(res=>{
+        if (res.data.length > 0) {
+          that.setData({
+            goods: util.sortData(res.data, that.data.sortWay),
+            tip: "到底了(∩_∩)!!"
+          })
+        } else {//一个都没有
+          wx.showToast({
+            title: '没有相关商品',
+            icon: 'loading',
+            duration: 1000
+          })
         }
       })
-    },1000)
+      .catch(err=>{
+        console.log(err)
+      })
+    }
   },
   /*点击排序按钮 */
   changeSortWay:function(e){
@@ -321,11 +343,6 @@ Page({
         }
       })
     }
-  },
-  onLoad:function(){
-    app.globalData.indexClassifyDetailName="显示全部"
-    app.globalData.resetPageNum = 0
-  },
-  onShareAppMessage:function(){
   }
+  /*自定义事件 结束 */
 })
