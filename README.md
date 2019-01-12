@@ -1,5 +1,4 @@
 # 云开发二手买卖小程序
-## 参考文档
 数据库定义：
 user：{
   "_id":"XCWs6FsqTi00tk91",
@@ -32,5 +31,6 @@ good:{
   "payWay":"货到付款",
   "transWay":"圆通"}
 }
-- [云开发文档](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/basis/getting-started.html)
+##参考文档
+[云开发文档](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/basis/getting-started.html)
 
