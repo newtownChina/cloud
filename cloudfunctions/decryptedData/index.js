@@ -20,7 +20,7 @@ exports.main = async (event, context) => {
   }*/
   var pc = new WXBizDataCrypt(appId, sessionKey)
   var data = pc.decryptData(encryptedData, iv)
-  return {
+  return {//sync函数内部return语句返回的值，会成为then方法回调函数的参数。调用了new Promise里的resolve
     data: data,
     openid:openid
   }
