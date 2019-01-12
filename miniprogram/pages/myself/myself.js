@@ -3,7 +3,8 @@ const app = getApp();
 Page({
   data: {
     userInfo:null,
-    ifAdmin:false
+    ifAdmin:false,
+    openid: wx.getStorageSync("openid")
   },
   /*生命周期事件 开始 */
   onLoad: function (options) {
@@ -21,16 +22,7 @@ Page({
             userInfo: app.globalData.userInfo
           })
         }
-        // res.authSetting = {
-        //   "scope.userInfo": true,
-        //   "scope.userLocation": true
-        // }
       }
-    })
-    this.setData({
-      openid: wx.getStorageSync("openid"),
-      storedPhoneNum: wx.getStorageSync("storedPhoneNum"),
-      ifAdmin: wx.getStorageSync("ifAdmin") != "" ? wx.getStorageSync("ifAdmin") : this.data.ifAdmin
     })
   },
   /*生命周期事件 结束 */
@@ -97,7 +89,7 @@ Page({
   },
   getPhoneNumber: function (res) {
     var that = this
-    var code = app.globalData.code
+    var code = wx.getStorageSync("code")
     if (res.detail.errMsg != "getPhoneNumber:ok") {
       wx.showModal({
         title: '获取手机号失败',
@@ -117,13 +109,6 @@ Page({
           code: code
         }
       }).then(function (res) {
-        console.log(res)
-        that.setData({
-          storedPhoneNum: res.result.data.phoneNumber
-        })
-        app.globalData.openid = res.result.openid
-        console.log(app.globalData.openid)
-        wx.setStorageSync("openid", res.result.openid)
         wx.setStorageSync("storedPhoneNum", res.result.data.phoneNumber)
       }).catch(function (res) {
         console.log(res)

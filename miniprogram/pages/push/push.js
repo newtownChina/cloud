@@ -85,8 +85,7 @@ Page({
   },
   checkAndPush: function () {
     //检查登录状态
-    var ifLogin = util.checkLogin()
-    if (!ifLogin || !app.globalData.userInfo) {
+    if (!app.globalData.userInfo) {
       return
     }
     console.log(this.data.classifyDetailName)
@@ -178,8 +177,8 @@ Page({
                     pics: good_pics,
                     prc_b: that.data.costPrice,
                     prc_s: that.data.sellPrice,
-                    pub_dt: util.formatTime(new Date()),
-                    tel: that.data.storedPhoneNum
+                    pub_dt: util.formatTime(new Date())//,
+                    //tel: that.data.storedPhoneNum
                   }
                 }).then(res => {
                   console.log(res)

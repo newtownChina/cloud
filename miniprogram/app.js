@@ -35,10 +35,22 @@ App({
     updateManager.onUpdateFailed(function () {
       console.log("新版本下载失败")
     })
-    wx.login({
+    wx.login({//获取临时登录凭证
       success: function (res) {
-        app.globalData.code=res.code
+        console.log(res)
+        wx.setStorageSync("code", res.code)
       }
+    })
+    wx.cloud.callFunction({
+      name:'login',
+      data:{}
+    })
+    .then(res=>{
+      console.log(res.result.openid)
+      wx.setStorageSync("openid", res.result.openid)
+    })
+    .catch(err=>{
+      console.log(err)
     })
   }
 })

@@ -142,38 +142,28 @@ function changeBgColor(tim_bg_color, pri_bg_color, hot_bg_color, sum_bg_color,ob
 }
 function checkLogin(){
   console.log("进入checkLogin")
-  var userInfo
-  var value;
-  try {
-    userInfo = app.globalData.userInfo
-    value = wx.getStorageSync("storedPhoneNum")
-    console.log("util.js:本地缓存中的手机号："+value)
-    if (!value || !userInfo){
-      wx.showModal({
-        title: '提示',
-        content: '请先点击两个“微信图标”授权后才能正常使用小程序哦',
-        success: function (res) {
-          if (res.confirm) {
-            // wx.navigateTo({
-            //   老方法用发短信登录
-            //   url: '/pages/phoneReg/phoneReg',
-            // })
-            wx.switchTab({
-              url: '/pages/myself/myself',
-            })
-          } else if (res.cancel) {
-            wx.navigateBack({
-              delta: 1
-            })
-            return
-          }
+  var ifLogin = false
+  var userInfo = app.globalData.userInfo
+  if (!userInfo) {
+    wx.showModal({
+      title: '提示',
+      content: '登录后才能正常使用小程序哦',
+      success: function (res) {
+        if (res.confirm) {
+          wx.switchTab({
+            url: '/pages/myself/myself',
+          })
+        } else if (res.cancel) {
+          wx.navigateBack({
+            delta: 1
+          })
         }
-      })
-    }
-  } catch (e) {
-    console.log(e)
+      }
+    })
+  } else {
+    ifLogin = true
   }
-  return value;//返回手机号
+  return ifLogin
 }
 module.exports = { formatTime: formatTime }//注意不能放到最后，否则相当于重新赋值，则openMapLocation，checkLogin，sortData会未定义
 module.exports.openMapLocation= openMapLocation

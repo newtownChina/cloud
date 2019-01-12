@@ -15,6 +15,9 @@ Page({
     openid:app.globalData.openid
   },
   /*生命周期事件 开始 */
+  onLoad:function(){
+    wx.setStorageSync("indexClassify",{detailName: "全部", resetPageNum:0})
+  },
   onShow: function (options) {
     //默认按照时间倒序排列
     util.changeBgColor("green", "white", "white", "white",this)
