@@ -10,23 +10,28 @@
       <view class="good">
         <view class="userInfo">
           <view class="userPhoto">
-            <image src="{{good.avatar_url}}"></image>
+            <image src="{{good.avatar}}"></image>
           </view>
           <view class="userName">
-            <text>{{good.nick_name}}</text>
+            <text>{{good.nick}}</text>
           </view>
         </view>
         <view ><text class="order_id_text">订单编号：{{good.out_trade_no}}</text></view>
-        <view class="not_pay" wx:if="{{good.pay_flag==0}}" bindtap='pay_not_pay' data-good="{{good}}">待付款</view>
-        <view class="has_pay" wx:if="{{good.pay_flag==1 && good.seller_transport_state==0}}">等待卖家发货</view>
-        <view class="has_pay" wx:if="{{good.pay_flag==1 && good.seller_transport_state==1}}">卖家已经发货</view>
-        <view>收件地址:{{good.trade_addr}}<image class="telicon" data-phone="{{good.telphone}}" bindtap="phoneCall" src="/images/tel.png"></image></view>
-        <view bindtap='getTraces' data-good="{{good}}">配送方式:{{good.seller_transport_way_str}}</view>
-        <view wx:if="{{good.flag==2}}">状态:交易中</view>
-        <view wx:if="{{good.flag==1}}">状态:交易完成</view>     
+        <view wx:if="{{good.buyer.payState==1}}">付款状态:等待付款</view>
+        <view wx:if="{{good.buyer.payState==0}}">付款状态:已付款</view>
+        <view wx:if="{{good.buyer.state==1}}">交易状态:交易完成</view>
+        <view wx:if="{{good.buyer.state==0}}">交易状态:交易中</view> 
+        <!-- <view>联系卖家</view> -->
+        <view bindtap='getTraces' data-good="{{good}}">配送方式:{{good.buyer.transWay}}</view>
+        <view>收货地址:{{good.buyer.buyerInfo.provinceName}}
+          {{good.buyer.buyerInfo.cityName}}
+          {{good.buyer.buyerInfo.countyName}}
+          {{good.buyer.buyerInfo.detailInfo}}
+          {{good.buyer.buyerInfo.userName}}
+        </view>   
         <scroll-view scroll-x>
           <view class="goodPics">
-            <block wx:for="{{good.img_urls}}" wx:for-item="img_url">
+            <block wx:for="{{good.pics}}" wx:for-item="img_url">
               <view>
                 <image bindtap="previewImg" data-src="{{img_url}}" src="{{img_url}}" mode="aspectFill"></image>
               </view>
@@ -34,15 +39,15 @@
           </view>
         </scroll-view>
         <view class="goodNameAndDesc">
-          <text class="goodName">{{good.good_name}}</text>
-          <text class="goodDesc">{{good.good_desc}}</text>
+          <text class="goodName">{{good.name}}</text>
+          <text class="goodDesc">{{good.desc}}</text>
         </view>
         <view class="priceEtc">
           <text class="icon">￥</text>
-          <text class="price">{{good.sell_price}}</text>
-          <text class="price" style="text-decoration:line-through;font-size:22rpx;margin-left:20rpx;">原价:￥{{good.cost_price}}</text>
+          <text class="price">{{good.prc_s}}</text>
+          <text class="price" style="text-decoration:line-through;font-size:22rpx;margin-left:20rpx;">原价:￥{{good.prc_b}}</text>
           <!--交易未完成才显示收货-->
-          <text wx:if="{{good.flag!=1}}" class="receiveGood" data-gid="{{good.id}}" bindtap="receiveGoodBtn">确认收货</text>
+          <text wx:if="{{good.flag!=1}}" class="receiveGood" data-id="{{good._id}}" bindtap="receiveGoodBtn">确认收货</text>
           <text class="receiveGood" bindtap="navigateToGoodDetail"  data-good="{{good}}">查看详情</text>
         </view>
       </view>

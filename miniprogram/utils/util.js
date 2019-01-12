@@ -47,18 +47,17 @@ function openMapLocation(){
 }
 /*根据排序方式对后台返回的goods数据进行排序 */
 function sortData(data, sortWay) {
-  return data
   console.log(data)
   console.log("若提示data.sort is not a function，说明返回的goods数据有问题")
   if ("tim" == sortWay) {
     console.log("待排序数组，排序方式为tim：降序")
     if (null != data && undefined != data && "" != data) {
       data.sort(function (x, y) {
-        if (x.publish_time < y.publish_time) {
+        if (x.pub_dt < y.pub_dt) {
           return 1
-        } else if (x.publish_time > y.publish_time) {
+        } else if (x.pub_dt > y.pub_dt) {
           return -1
-        } else if (x.publish_time === y.publish_time) {
+        } else if (x.pub_dt === y.pub_dt) {
           return 0
         }
       })
@@ -67,11 +66,11 @@ function sortData(data, sortWay) {
   } else if ("pri" == sortWay) {
     console.log("待排序数组，排序方式为pri：升序")
     data.sort(function (x, y) {
-      if (parseFloat(x.sell_price) < parseFloat(y.sell_price)) {
+      if (parseFloat(x.prc_s) < parseFloat(y.prc_s)) {
         return -1
-      } else if (parseFloat(x.sell_price) > parseFloat(y.sell_price)) {
+      } else if (parseFloat(x.prc_s) > parseFloat(y.prc_s)) {
         return 1
-      } else if (parseFloat(x.sell_price) === parseFloat(y.sell_price)) {
+      } else if (parseFloat(x.prc_s) === parseFloat(y.prc_s)) {
         return 0
       }
     })
@@ -79,11 +78,11 @@ function sortData(data, sortWay) {
   } else if ("hot" == sortWay) {
     console.log("待排序数组，排序方式为hot：降序")
     data.sort(function (x, y) {
-      if (x.leave_msg_count < y.leave_msg_count) {
+      if (x.msg.length < y.msg.length) {
         return 1
-      } else if (x.leave_msg_count > y.leave_msg_count) {
+      } else if (x.msg.length > y.msg.length) {
         return -1
-      } else if (x.leave_msg_count === y.leave_msg_count) {
+      } else if (x.msg.length === y.msg.length) {
         return 0
       }
     })
@@ -92,9 +91,9 @@ function sortData(data, sortWay) {
     console.log("待排序数组，排序方式为sum综合：升序")
     data.sort(function (x, y) {
       /*价格低 留言多,往前放；反之，往后放，其他不变*/
-      if (parseFloat(x.sell_price) < parseFloat(y.sell_price) && x.leave_msg_count > y.leave_msg_count) {
+      if (parseFloat(x.prc_s) < parseFloat(y.prc_s) && x.msg.length > y.msg.length) {
         return -1
-      } else if (parseFloat(x.sell_price) > parseFloat(y.sell_price) && x.leave_msg_count < y.leave_msg_count) {
+      } else if (parseFloat(x.prc_s) > parseFloat(y.prc_s) && x.msg.length < y.msg.length) {
         return 1
       } else {
         return 0

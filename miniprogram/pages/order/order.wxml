@@ -1,2 +1,48 @@
 <!--pages/order/order.wxml-->
-<text>pages/order/order.wxml</text>
+<view class="container">
+  <view class="title">完善订单信息</view>
+  <view class="addr">
+    <view class="addr_title" bindtap='chooseAddress'>收件信息<text class="gt">选择收件地址></text></view>
+    <view class="buyerInfo">{{buyerInfo.userName}} {{buyerInfo.telNumber}}</view>
+    <view class="buyerInfo">{{buyerInfo.provinceName}}{{buyerInfo.cityName}}{{buyerInfo.countyName}}{{buyerInfo.detailInfo}} <text wx:if="{{buyerInfo.postalCode}}">邮编:{{buyerInfo.postalCode}}</text></view>
+  </view>
+  <view class="good_info">
+    <view class="good_seller">
+      <view class="avatar_url">
+        <image src="{{good.avatar}}" />
+      </view>
+      <view class="nick_name">{{good.nick}}</view>
+    </view>
+    <view class="good_pic_desc">
+      <view class="good_pic">
+        <image wx:if="{{good.pics[0]}}" src="{{good.pics[0]}}" />
+      </view>
+      <view class="good_desc">
+        <view>{{good.name}}</view>
+        <view>{{good.desc}}</view>
+      </view>
+    </view>
+  </view>
+  <!-- <view class="pay_way">
+    <view><text>支付方式：</text><image src='../../images/wxpay2.png' /></view>
+  </view> -->
+  <view class="pay_way">
+    <view>支付方式：货到付款</view>
+  </view>
+  <view class="good_trans_way">
+      <view>配送方式：</view>
+      <checkbox-group bindchange="checkboxChange">
+        <label class="checkbox" wx:for="{{items}}">
+          <checkbox value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+        </label>
+      </checkbox-group>
+      <input wx:if="{{visible}}" type="text" placeholder='请输入快递名' bindblur='getTransportWay' value="{{qita_addr}}"/>
+  </view>
+  <!-- <view class="good_trans_way">
+      <view>配送方式：当面交易</view>
+  </view> -->
+  <view class="confirm_order">
+    <text>合计：￥{{good.prc_s}}</text>
+    <view data-id="{{good._id}}" data-sellprice="{{good.prc_s}}" bindtap="confirmOrder">确认下单</view>
+  </view>
+</view>

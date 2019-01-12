@@ -3,28 +3,34 @@
     <view class="online">我卖出的</view>
   </view>
   <view class="container">
+    <!-- <view class="title">
+      <text>在售宝贝</text>
+    </view> -->
     <block wx:for="{{goods}}" wx:for-item="good">
       <view class="good">
         <view class="userInfo">
           <view class="userPhoto">
-            <image src="{{good.avatar_url}}"></image>
+            <image src="{{good.avatar}}"></image>
           </view>
           <view class="userName">
-            <text>{{good.nick_name}}</text>
+            <text>{{good.nick}}</text>
           </view>
         </view>
-        <view wx:if="{{good.pay_flag==1}}">状态:买家已付款</view>
-        <view wx:if="{{good.flag==2}}">状态:交易中</view>
-        <view wx:if="{{good.flag==1}}">状态:交易完成</view>
-        <view>联系买家:{{good.telphone}}</view>
-        <view>收货地址:{{good.trade_addr}}
-        <!-- 
-        <text class="tel" data-phone="{{good.telphone}}" >:{{good.telphone}}</text>           -->
-          <image class="telicon" bindtap="phoneCall" src="/images/tel.png" data-phone="{{good.telphone}}" />
+        <view wx:if="{{good.buyer.payState==1}}">付款状态:买家已付款</view>
+        <view wx:if="{{good.buyer.payState==0}}">付款状态:买家未付款</view>
+        <view wx:if="{{good.buyer.state==1}}">交易状态:交易完成</view>
+        <view wx:if="{{good.buyer.state==0}}">交易状态:交易中</view>
+        <view>联系买家:{{good.buyer.buyerInfo.telNumber}}</view>
+        <view>收货地址:
+          {{good.buyer.buyerInfo.provinceName}}
+          {{good.buyer.buyerInfo.cityName}}
+          {{good.buyer.buyerInfo.countyName}}
+          {{good.buyer.buyerInfo.detailInfo}}
+          {{good.buyer.buyerInfo.userName }}
         </view>
         <scroll-view scroll-x>
           <view class="goodPics">
-            <block wx:for="{{good.img_urls}}" wx:for-item="img_url">
+            <block wx:for="{{good.pics}}" wx:for-item="img_url">
               <view>
                 <image bindtap="previewImg" data-src="{{img_url}}" src="{{img_url}}" mode="aspectFill"></image>
               </view>
@@ -32,15 +38,15 @@
           </view>
         </scroll-view>
         <view class="goodNameAndDesc">
-          <text class="goodName">{{good.good_name}}</text>
-          <text class="goodDesc">{{good.good_desc}}</text>
+          <text class="goodName">{{good.name}}</text>
+          <text class="goodDesc">{{good.desc}}</text>
         </view>
         <view class="priceEtc">
           <text class="icon">￥</text>
-          <text class="price">{{good.sell_price}}</text>
-          <text class="price" style="text-decoration:line-through;font-size:22rpx;margin-left:20rpx;">原价:￥{{good.cost_price}}</text>
+          <text class="price">{{good.prc_s}}</text>
+          <text class="price" style="text-decoration:line-through;font-size:22rpx;margin-left:20rpx;">原价:￥{{good.prc_b}}</text>
           <!-- <text class="receiveGood" data-gid="{{good.id}}" bindtap="receiveGoodBtn">确认收货</text> -->
-          <text wx:if="{{good.flag!=1}}" class="receiveGood" bindtap="inputTransportOrder"  data-gid="{{good.id}}">确认发货</text>
+          <text wx:if="{{good.flag!=1}}" class="receiveGood" bindtap="inputTransportOrder"  data-id="{{good._id}}">确认发货</text>
           <text class="receiveGood" bindtap="navigateToGoodDetail"  data-good="{{good}}">查看详情</text>
         </view>
       </view>

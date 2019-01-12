@@ -1,1 +1,159 @@
 /* pages/order/order.wxss */
+Page{
+  margin:0;
+  padding:0;
+  background:#f8f8f8;
+}
+.container{
+  width:100%;
+  height:100%;
+  margin:0;
+  padding:20rpx;
+  font-size:12px;
+}
+.title{
+  width:100%;
+  height:80rpx;
+  border:1px solid #ddd;
+  line-height: 80rpx;
+  text-align: center;
+  background:white;
+}
+.addr{
+  width:100%;
+  height:180rpx;
+  border:1px solid #ddd;
+  margin-top:20rpx;
+  background:white;
+}
+.addr .addr_title{
+  padding-left: 20rpx;
+  height:60rpx;
+  border-bottom:1px solid #ddd;
+  line-height:60rpx;
+}
+.addr .addr_title .gt{
+  float:right;
+  margin-right:20rpx;
+}
+.addr .buyerInfo{
+  padding-left:20rpx;
+  height:58rpx;
+  border-bottom:1px dotted #f2f2f2;
+  line-height:58rpx;
+}
+.addr textarea{
+  width:96%;
+  padding:2%;
+  height:60rpx;
+}
+.good_info{
+  width:670rpx;
+  height:300rpx;
+  border:1px solid #ddd;
+  margin-top:20rpx;
+  padding:20rpx;
+  background:white;
+}
+.good_info .good_seller{
+  width:100%;
+  height:100rpx;
+  border-bottom:1px solid #ddd;
+}
+.good_info .good_seller .avatar_url{
+  width:100rpx;
+  height:100rpx;
+  float:left;
+}
+.good_info .good_seller .nick_name{
+  width:100rpx;
+  height:100rpx;
+  float:left;
+  margin-left:20rpx;
+  line-height: 80rpx;
+}
+.good_info .good_seller .avatar_url image{
+  width:80rpx;
+  height:80rpx;
+  border-radius:50%;
+}
+.good_info .good_pic_desc{
+  height:220rpx;
+  border-bottom:1px solid #ddd;
+}
+.good_info .good_pic_desc .good_pic{
+  width:180rpx;
+  height:180rpx;
+  border:1px solid #ddd;
+  float:left;
+  margin:20rpx 0;
+}
+.good_info .good_pic_desc .good_pic image{
+  width:180rpx;
+  height:180rpx;
+}
+.good_info .good_pic_desc .good_desc{
+  color:gray;
+  width:460rpx;
+  height:180rpx;
+  float:left;
+  margin:20rpx 0 20rpx 20rpx;
+  overflow:hidden;
+}
+.good_trans_way{
+  width:670rpx;
+  height:250rpx;
+  line-height: 60rpx;
+  border:1px solid #ddd;
+  margin-top:10rpx;
+  background:white;
+  padding:20rpx;
+  position: relative;
+}
+.good_trans_way input{
+  width:350rpx;
+  height:40rpx;
+  position: absolute;
+  left:20rpx;
+  bottom:10rpx;
+  padding:6rpx 0 6rpx 10rpx;
+  border:1px solid #eee;
+}
+.pay_way{
+  width:670rpx;
+  height:60rpx;
+  line-height: 60rpx;
+  border:1px solid #ddd;
+  margin-top:10rpx;
+  background:white;
+  padding:20rpx;
+  position: relative;
+}
+.pay_way view image{
+  position:absolute;
+  top:26rpx;
+  right:20rpx;
+  width:170rpx;
+  height:50rpx;
+}
+.confirm_order{
+  width:100%;
+  height:100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  border:1px solid #ddd;
+  margin-top:20rpx;
+  position:fixed;
+  bottom: 0;
+  font-size:14px;
+  background:white;
+}
+.confirm_order view{
+  border:1px solid red;
+  width:200rpx;
+  height:100rpx;
+  font-size:15px;
+  background:red;
+  color:white;
+  float:right;
+}
