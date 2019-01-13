@@ -122,7 +122,7 @@ scroll-view{
 .pushBtn {
   width: 300rpx;
   height: 60rpx;
-  background: green;
+  background: #5cc45b;
   text-align: center;
   line-height: 60rpx;
   color: white;

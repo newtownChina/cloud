@@ -13,7 +13,10 @@ Page({
     tip:"到底了(∩_∩)!!",
     sortWay:"tim",
     searchKeyword:"",
-    openid:app.globalData.openid
+    searchHis:[],//当前的搜索历史
+    hideLoading:true,
+    hideSearchHis:true,
+    openid:wx.getStorageSync("openid")
   },
   /*生命周期事件 开始 */
   onLoad:function(){
@@ -21,7 +24,7 @@ Page({
   },
   onShow: function (options) {
     //默认按照时间倒序排列
-    util.changeBgColor("green", "white", "white", "white",this)
+    util.changeBgColor("#5cc45b", "white", "white", "white",this)
     //为了防止在搜索时，每次查看商品详情后，反而去查询按照分类显示的商品
     if (this.data.showState =="search"){
       return
@@ -32,6 +35,7 @@ Page({
     var detailName = indexClassify.detailName
     this.setData({
       tip:"加载中……",
+      hideLoading:false,
       detailName: detailName
     })
     var _pageNum = that.data.pageNum
@@ -64,7 +68,8 @@ Page({
         }
         that.setData({
           goods: util.sortData(res.data, that.data.sortWay),
-          tip: tip
+          tip: tip,
+          hideLoading:true
         })
       } else {//一个都没有
         wx.showToast({
@@ -94,6 +99,7 @@ Page({
       console.log(this.data.showState)
       var _pageNum = that.data.pageNum
       var _count = that.data.count
+      var keyword = that.data.keyword
       var option = {
         name: db.RegExp({
           regexp: "[a-zA-Z0-9]*" + keyword + "[a-zA-Z0-9]*",
@@ -240,49 +246,137 @@ Page({
       keyword: e.detail.value
     })
   },
-  searchKeyword:function(){
+  searchKeyword:function(e){
     var that = this
-    if(!this.data.keyword){
-      wx.showToast({
-        title: '请输入内容哦~',
-        icon:"loading",
-        duration:800
+    console.log(e)
+    if(e.type == "confirm"){//打字搜索
+      that.setData({
+        keyword:e.detail.value
       })
-    }else{
-      this.setData({
-        showState: "search",
-        pageNum: 0,//当搜索时，要从0开始
-        count: 5
-      })
-      var keyword = this.data.keyword
-      
-      var option = {
-        name: db.RegExp({
-          regexp: "[a-zA-Z0-9]*" + keyword + "[a-zA-Z0-9]*",
-          options: 'i'
-        })
-      }
-      console.log(option)
-      db.collection("good").where(option)
-      .get()
-      .then(res=>{
-        if (res.data.length > 0) {
-          that.setData({
-            goods: util.sortData(res.data, that.data.sortWay),
-            tip: "到底了(∩_∩)!!"
-          })
-        } else {//一个都没有
-          wx.showToast({
-            title: '没有相关商品',
-            icon: 'loading',
-            duration: 1000
-          })
-        }
-      })
-      .catch(err=>{
-        console.log(err)
+    } else if (e.type == "tap"){//点击历史记录搜索
+      that.setData({
+        keyword: e.currentTarget.dataset.keyword,
+        hideSearchHis:true
       })
     }
+    var searchKeyword = function(){
+      if (!that.data.keyword){
+        wx.showToast({
+          title: '请输入内容哦~',
+          icon:"loading",
+          duration:800
+        })
+      }else{
+        that.setData({
+          showState: "search",
+          pageNum: 0,//当搜索时，要从0开始
+          count: 5,
+          hideLoading:false
+        })
+        var keyword = that.data.keyword
+        var option = {
+          name: db.RegExp({
+            regexp: "[a-zA-Z0-9]*" + keyword + "[a-zA-Z0-9]*",
+            options: 'i'
+          })
+        }
+        console.log(option)
+        db.collection("good").where(option)
+        .get()
+        .then(res=>{
+          if (res.data.length > 0) {
+            that.setData({
+              goods: util.sortData(res.data, that.data.sortWay),
+              tip: "到底了(∩_∩)!!",
+              hideLoading:true
+            })
+          } else {//一个都没有
+            wx.showToast({
+              title: '没有相关商品',
+              icon: 'loading',
+              duration: 1000
+            })
+            that.setData({
+              hideLoading:true
+            })
+          }
+        })
+        .catch(err=>{
+          console.log(err)
+        })
+        //将搜索历史插入我的个人信息,如果已经存在当前搜索历史，则不加
+        var openid = that.data.openid
+        var searchHis = that.data.searchHis
+        if (searchHis.indexOf(keyword)>-1){
+          console.log("当前关键词已经在搜索历史中")
+          return
+        }else{
+          db.collection("user").where({
+            _openid: openid
+          })
+          .get()
+          .then(res => {
+            var u_id = res.data[0]._id
+            db.collection("user").doc(u_id)
+            .update({
+              data: {
+                searchHis: _.push([keyword])
+              }
+            })
+            .then(res => {
+              if (res.stats.updated == 1) {
+                console.log("成功加入搜索历史信息:" + keyword)
+              }
+            })
+            .catch(err => {
+              console.log(err)
+            })
+          })
+          .catch(err => {
+            console.log(err)
+          })
+        }
+      }
+    }
+    setTimeout(searchKeyword, 100)
+  },
+  querySearchHis:function(){
+    var that = this
+    var openid = that.data.openid
+    db.collection("user").where({
+      _openid: openid
+    })
+    .get()
+    .then(res => {
+      var u_id = res.data[0]._id
+      db.collection("user").field({
+        searchHis:true
+      })
+      .get()
+      .then(res => {
+        console.log(res)
+        var searchHis = res.data[0].searchHis
+        if (searchHis && searchHis.length>0){
+          that.setData({
+            searchHis: searchHis,
+            hideSearchHis: false
+          })
+        }else{
+          console.log("历史搜索记录为空")
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  },
+  closeSearchHis:function(){
+    this.setData({
+      hideSearchHis:true
+    })
   },
   /*点击排序按钮 */
   changeSortWay:function(e){
@@ -303,28 +397,28 @@ Page({
         goods: util.sortData(that.data.goods,"tim")
       })
       //改变背景色
-      util.changeBgColor("green", "white", "white", "white",this)
+      util.changeBgColor("#5cc45b", "white", "white", "white",this)
       console.log("sortWay:"+this.data.sortWay)
     } else if ("pri" == sortWay){
       this.setData({
         sortWay: "pri",
         goods: util.sortData(that.data.goods, "pri")
       })
-      util.changeBgColor("white", "green", "white", "white",this)
+      util.changeBgColor("white", "#5cc45b", "white", "white",this)
       console.log("sortWay:"+this.data.sortWay)
     } else if ("hot" == sortWay){
       this.setData({
         sortWay: "hot",
         goods: util.sortData(that.data.goods, "hot")
       })
-      util.changeBgColor("white", "white", "green", "white",this)
+      util.changeBgColor("white", "white", "#5cc45b", "white",this)
       console.log("sortWay:"+this.data.sortWay)
     } else if ("sum" == sortWay){
       this.setData({
         sortWay: "sum",
         goods: util.sortData(that.data.goods, "sum")
       })
-      util.changeBgColor("white", "white", "white", "green",this)
+      util.changeBgColor("white", "white", "white", "#5cc45b",this)
       console.log("sortWay:"+this.data.sortWay)
     }
   },

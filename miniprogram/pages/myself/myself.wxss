@@ -19,7 +19,7 @@ Page {
 .userInfo {
   width: 100%;
   height: 300rpx;
-  background: green;
+  background: #5cc45b;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,6 +37,9 @@ Page {
 }
 .authority button{
   float:left;
+}
+.authority button image{
+  background: transparent;
 }
 .userItem {
   width: 100%;

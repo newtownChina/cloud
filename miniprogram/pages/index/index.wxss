@@ -51,11 +51,13 @@ Page{
   padding:4rpx
 }
 .publish_time{
-  margin:20rpx 0;
+  margin:10rpx 0;
   height:60rpx;
   line-height: 60rpx;
   float:left;
+  color:#888;
 }
+
 .leave_msg{
   float:left;
   height:60rpx;
@@ -66,16 +68,16 @@ Page{
   width:38rpx;
   height:30rpx;
   vertical-align: middle;
-  margin:30rpx 0 0 20rpx;
+  margin:10rpx 0 0 20rpx;
 }
 .leave_msg view{
   padding:4rpx;
   position: absolute;
   right:-10rpx;
-  top:24rpx;
+  top:14rpx;
   width:16rpx;
   height:16rpx;
-  background: orange;
+  background: #ff5500;
   color:white;
   text-align: center;
   line-height: 16rpx;
@@ -116,7 +118,7 @@ Page{
 }
 .priceEtc .price{
   color:red;
-  font-size: 16px;
+  font-size: 38rpx;
 }
 .priceEtc .tel{
   float:right;
@@ -155,30 +157,81 @@ scorllview{
   height:70rpx;
   float:left;
   text-align: left;
-  border-bottom:1px solid #ddd;
-  margin-bottom:20rpx;
+  margin-bottom:5rpx;
+  color:#888;
+}
+.classify{
+  width:100rpx;
+  height:40rpx;
+  line-height: 40rpx;
+  border:1px solid #ddd;
+  padding:0 10rpx 0 10rpx;
+  text-align: center;
+  border-radius:60rpx;
+  color:#5cc45b;
 }
 .search{
-  width: 100%;
+  width: 710rpx;
   height:60rpx;
-  border:1px solid #ddd;
   margin-bottom:5px;
-  border-radius: 3px;
+  position: relative;
 }
-.search input{
+.scrollView{
+  width:650rpx;
+  height:80rpx;
+}
+.searchHis{
+  position: absolute;
+  left:0;
+  top:0;
+  height:60rpx;
+  background: white;
+  display:flex;
+  flex-direction: row;
+}
+.s_item{
+  width: 100rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  text-align: center;
+  padding:2rpx;
+  border:1px solid #888;
+  background: #fafafa;
+  border-radius: 10rpx;
+  margin:10rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.closeSearchHis{
+  position: absolute;
+  right:0;
+  top:60rpx;
+  width:60rpx;
+  height:60rpx;
+  text-align: center;
   line-height: 60rpx;
-  padding-left:2%;
-  width:78%;
+  font-size: 36rpx;
+  overflow: scroll-x;
+}
+input{
+  line-height: 60rpx;
+  padding-left:20rpx;
+  width:626rpx;
   float:left;
+  display: block;
+  border-radius: 60rpx;
+  border:1px solid #ccc;
 }
 .search .searchBtn{
   color:white;
   float:left;
-  width:20%;
-  background:green;
-  text-align: center;
+  width:60rpx;
   line-height: 60rpx;
-  letter-spacing: 6rpx;
+  height:60rpx;
+}
+.search .searchBtn image{
+  width: 32px;
+  height:32px;
 }
 .adminTab{
   width:100%;
@@ -204,8 +257,9 @@ scorllview{
   width:100%;
   height:60rpx;
   border:0;
+  font-family: "STXihei";
 }
-.sort view{float:left;height:60rpx;line-height: 60rpx;margin:0 10rpx 0 -1px;border:1px solid #ddd;padding:0 20rpx 0 20rpx;}
+.sort view{float:left;height:40rpx;line-height: 40rpx;margin:0 10rpx 0 -1px;border:1px solid #ddd;padding:0 20rpx 0 20rpx;border-radius:60rpx;}
 
 .authContainer{
   width:300rpx;
@@ -214,4 +268,19 @@ scorllview{
   position: fixed;
   top:300rpx;
   background:green;
+}
+.loading{
+  width:100rpx;
+  height:100rpx;
+  overflow: hidden;
+  border-radius: 100px;
+  position: fixed;
+  bottom:50%;
+}
+.loading image{
+  width:242rpx;
+  height:122rpx;
+  position: absolute;
+  left:-66rpx;
+  top:-12rpx;
 }

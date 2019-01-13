@@ -1,21 +1,24 @@
-<!-- <scroll-view scroll-y  style="height:{{windowHeight}}px;"> -->
 <view class="container">
-  <!-- <view class="title">
-      <text>在售宝贝</text>
-    </view> -->
-  <!-- <view bindtap='zhifu1fen'>支付1分</view> -->
   <view class="classifyDetailName">
     当前>{{detailName}}
   </view>
   <view class="search">
-    <input type="text" bindblur="getKeyword"/>
-    <view class="searchBtn" bindtap="searchKeyword">搜一下</view>
+    <input type="text" bindfocus="querySearchHis" bindblur="getKeyword" confirm-type="search" bindconfirm="searchKeyword" value="{{keyword}}"/>
+    <view class="searchBtn" bindtap="chooseClassify"><image src="../../images/s_list2.png" width="32" height="32"></image></view>
+    <scroll-view class="scrollView" scroll-x hidden="{{hideSearchHis}}">
+      <view class="searchHis">
+        <block wx:for="{{searchHis}}" wx:for-item="his" wx:key="*this">
+          <view class="s_item" bindtap="searchKeyword" data-keyword="{{his}}">{{his}}</view>
+        </block>
+      </view>
+    </scroll-view>
+    <view wx:if="{{searchHis.length>0}}" class="closeSearchHis" bindtap="closeSearchHis" hidden="{{hideSearchHis}}">×</view>
   </view>
   <view class="sort">
-    <view class="sortType" data-id="tim" bindtap='changeSortWay' style='background:{{tim_bg_color}};color:{{tim_color}}'>最新发布↑↓</view>
-    <view class="sortType" data-id="pri" bindtap='changeSortWay' style='background:{{pri_bg_color}};color:{{pri_color}}'>价格↑↓</view>
-    <view class="sortType" data-id="hot" bindtap='changeSortWay' style='background:{{hot_bg_color}};color:{{hot_color}}'>热度↑↓</view>
-    <view class="sortType" data-id="sum" bindtap='changeSortWay' style='background:{{sum_bg_color}};color:{{sum_color}}'>综合↑↓</view>
+    <view class="sortType" data-id="tim" bindtap='changeSortWay' style='background:{{tim_bg_color}};color:{{tim_color}}'>最新发布</view>
+    <view class="sortType" data-id="pri" bindtap='changeSortWay' style='background:{{pri_bg_color}};color:{{pri_color}}'>价格</view>
+    <view class="sortType" data-id="hot" bindtap='changeSortWay' style='background:{{hot_bg_color}};color:{{hot_color}}'>热度</view>
+    <view class="sortType" data-id="sum" bindtap='changeSortWay' style='background:{{sum_bg_color}};color:{{sum_color}}'>综合</view>
   </view>
   <block wx:for="{{goods}}" wx:for-item="good" wx:key="id">
     <view class="good" bindtap="navigateToGoodDetail" data-good="{{good}}">
@@ -49,6 +52,7 @@
         <image class="telicon" src="/images/tel.png"></image>
         -->
       </view>
+      <view class="classify">{{good.clas}}</view>  
       <view class="publish_time">发布时间:{{good.pub_dt}}</view>  
       <view class="leave_msg">
         <view>{{good.msg.length}}</view>
@@ -57,7 +61,8 @@
     </view>
   </block>
   <view class="tip">{{tip}}</view>
+  <view class="loading" hidden="{{hideLoading}}"><image src="../../images/loading2.gif" width="100" height="50"></image></view>
 </view>
 <!-- <button open-type='getUserInfo' bindgetuserinfo="getUserInfo">授权 </button> -->
-<view class="filter" bindtap="chooseClassify">挑选</view>
+<!-- <view class="filter" bindtap="chooseClassify">挑选</view> -->
 <!-- </scroll-view> -->

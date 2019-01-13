@@ -1,3 +1,6 @@
+<view class="nav">
+    <view class="online">商品详情</view>
+  </view>
 <view class="container">
   <view class="good" data-good="{{good}}">
     <view class="userInfo">

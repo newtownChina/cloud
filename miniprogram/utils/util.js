@@ -104,28 +104,28 @@ function sortData(data, sortWay) {
 }
 function changeBgColor(tim_bg_color, pri_bg_color, hot_bg_color, sum_bg_color,obj) {
   var tim_color, pri_color, hot_color, sum_color
-  if ("green" == tim_bg_color) {
+  if ("#5cc45b" == tim_bg_color) {
     tim_color = "white"
-    pri_color = "black"
-    hot_color = "black"
-    sum_color = "black"
+    pri_color = "#888"
+    hot_color = "#888"
+    sum_color = "#888"
   }
-  if ("green" == pri_bg_color) {
-    tim_color = "black"
+  if ("#5cc45b" == pri_bg_color) {
+    tim_color = "#888"
     pri_color = "white"
-    hot_color = "black"
-    sum_color = "black"
+    hot_color = "#888"
+    sum_color = "#888"
   }
-  if ("green" == hot_bg_color) {
-    tim_color = "black"
-    pri_color = "black"
+  if ("#5cc45b" == hot_bg_color) {
+    tim_color = "#888"
+    pri_color = "#888"
     hot_color = "white"
-    sum_color = "black"
+    sum_color = "#888"
   }
-  if ("green" == sum_bg_color) {
-    tim_color = "black"
-    pri_color = "black"
-    hot_color = "black"
+  if ("#5cc45b" == sum_bg_color) {
+    tim_color = "#888"
+    pri_color = "#888"
+    hot_color = "#888"
     sum_color = "white"
   }
   obj.setData({

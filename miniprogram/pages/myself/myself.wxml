@@ -5,7 +5,7 @@
     <text wx:if="{{userInfo!=null}}">{{userInfo.nickName}}</text>
     <view class='authority'>
         <button class="finger" wx:if="{{userInfo==null}}"><image src="../../images/finger.png"/></button>
-        <button wx:if="{{userInfo==null}}" class="btn" open-type="getUserInfo" bindgetuserinfo='getUserInfo'><image src="../../images/weixin48.png" /></button>
+        <button wx:if="{{userInfo==null}}" class="btn" open-type="getUserInfo" bindgetuserinfo='getUserInfo'><image src="../../images/user8.png" /></button>
         <!-- <button wx:if="{{!storedPhoneNum}}" class="btn" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"><image src="../../images/weixin48.png" />    
         </button> -->
     </view>

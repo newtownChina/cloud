@@ -15,13 +15,14 @@
     "pages/order/order",
     "pages/contact/contact",
     "pages/transport/transport",
-    "pages/transport_query/transport_query"
+    "pages/transport_query/transport_query",
+    "pages/search/search"
   ],
   "tabBar": {
     "position": "top",
     "list": [
       {
-        "pagePath":"pages/index/index",
+        "pagePath": "pages/index/index",
         "text": "首页"
       },
       {
