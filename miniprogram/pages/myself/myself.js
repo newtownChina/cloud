@@ -4,7 +4,8 @@ Page({
   data: {
     userInfo:null,
     ifAdmin:false,
-    openid: wx.getStorageSync("openid")
+    openid: wx.getStorageSync("openid"),
+    mallVersion: wx.getStorageSync("mallVersion")
   },
   /*生命周期事件 开始 */
   onLoad: function (options) {
@@ -26,11 +27,15 @@ Page({
     })
   },
   /*生命周期事件 结束 */
-
   /*自定义事件 开始 */
   navigateToMsgList: function () {
     wx.navigateTo({
       url: "/pages/nimlist/nimlist",
+    })
+  },
+  navigateToPush:function(){
+    wx.navigateTo({
+      url: "/pages/push/push",
     })
   },
   navigateToPublish:function(){

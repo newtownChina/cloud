@@ -16,7 +16,8 @@ Page({
     searchHis:[],//当前的搜索历史
     hideLoading:true,
     hideSearchHis:true,
-    openid:wx.getStorageSync("openid")
+    openid:wx.getStorageSync("openid"),
+    mallVersion: wx.getStorageSync("mallVersion")
   },
   /*生命周期事件 开始 */
   onLoad:function(){

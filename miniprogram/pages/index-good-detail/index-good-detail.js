@@ -14,7 +14,8 @@ Page({
     leave_messages:[],
     wanted_flag:false,
     weatherHidePane: true, //默认隐藏
-    openid: wx.getStorageSync("openid")
+    openid: wx.getStorageSync("openid"),
+    mallVersion: wx.getStorageSync("mallVersion")
   },
   /*生命周期事件 开始*/
   onLoad: function (options) {

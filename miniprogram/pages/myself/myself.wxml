@@ -16,23 +16,27 @@
         <text class="msgNotifyIcon">{{msgCount}}</text>
         <text class="gt">></text>
     </view> -->
-    <view class="published" bindtap="navigateToPublish">
+    <view wx:if="{{!mallVersion}}" class="published" bindtap="navigateToPush">
+      <text class="item">发布商品</text>
+      <text class="gt">></text>
+    </view>
+    <view wx:if="{{!mallVersion}}" class="published" bindtap="navigateToPublish">
       <text class="item">我发布的</text>
       <text class="gt">></text>
     </view>
-    <view class="selled" bindtap="navigateToSelled">
+    <view wx:if="{{!mallVersion}}" class="selled" bindtap="navigateToSelled">
       <text class="item">我卖出的</text>
       <text class="gt">></text>
     </view>
     <view class="wanted" bindtap="navigateToWanted">
-      <text class="item">我想要的</text>
+      <text class="item">我收藏的</text>
       <text class="gt">></text>
     </view> 
     <view class="bought" bindtap="navigateToBought">
       <text class="item">我买到的</text>
       <text class="gt">></text>
     </view>
-    <view class="bought" bindtap="navigateToContact">
+    <view wx:if="{{!mallVersion}}" class="bought" bindtap="navigateToContact">
       <text class="item">联系我们/侵权投诉</text>
       <text class="gt">></text>
     </view>

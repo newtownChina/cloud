@@ -12,7 +12,8 @@ Page({
     //tracesData:null
     bought_arr:[],//我买到的商品的ID集合
     u_id:null,
-    openid:wx.getStorageSync("openid")
+    openid:wx.getStorageSync("openid"),
+    mallVersion: wx.getStorageSync("mallVersion")
   },
   /*生命周期事件 开始 */
   onLoad: function (options) {},

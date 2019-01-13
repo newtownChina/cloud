@@ -16,17 +16,21 @@
             <text>{{good.nick}}</text>
           </view>
         </view>
-        <view wx:if="{{good.buyer.payState==1}}">付款状态:买家已付款</view>
-        <view wx:if="{{good.buyer.payState==0}}">付款状态:买家未付款</view>
-        <view wx:if="{{good.buyer.state==1}}">交易状态:交易完成</view>
-        <view wx:if="{{good.buyer.state==0}}">交易状态:交易中</view>
-        <view>联系买家:{{good.buyer.buyerInfo.telNumber}}</view>
-        <view>收货地址:
-          {{good.buyer.buyerInfo.provinceName}}
+        <view ><text class="good_info_item">订单编号</text>：{{good.out_trade_no}}</view>
+        <view wx:if="{{good.buyer.payWay}}"><text class="good_info_item" >付款方式:</text>{{good.buyer.payWay}}</view>
+        <view wx:if="{{good.buyer.payState==0}}"><text  class="good_info_item" >付款状态:</text>买家未付款</view>
+        <view wx:if="{{good.buyer.payState==1}}"><text  class="good_info_item" >付款状态:</text>买家已付款</view>
+        <view wx:if="{{good.buyer.state==1}}"><text  class="good_info_item" >交易状态:</text>交易完成</view>
+        <view wx:if="{{good.buyer.state==0}}"><text  class="good_info_item" >交易状态:</text>交易中</view> 
+        <view bindtap='getTraces' data-good="{{good}}"><text  class="good_info_item" >配送方式:</text>{{good.buyer.transWay}}</view>
+        <view><text class="good_info_item" >收货地址:</text>{{good.buyer.buyerInfo.provinceName}}
           {{good.buyer.buyerInfo.cityName}}
           {{good.buyer.buyerInfo.countyName}}
           {{good.buyer.buyerInfo.detailInfo}}
-          {{good.buyer.buyerInfo.userName }}
+          {{good.buyer.buyerInfo.userName}}
+        </view>
+        <view>
+          <text class="good_info_item" >联系买家:</text>{{good.buyer.buyerInfo.telNumber}}
         </view>
         <scroll-view scroll-x>
           <view class="goodPics">

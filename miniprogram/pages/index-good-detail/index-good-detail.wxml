@@ -23,7 +23,7 @@
     <view class="priceEtc">
       <text class="icon">￥</text>
       <text class="price">{{good.prc_s}}</text>
-      <text class="price" style="text-decoration:line-through;font-size:22rpx;margin-left:20rpx;">原价:￥{{good.prc_b}}</text>
+      <text wx:if="{{!mallVersion}}" class="price" style="text-decoration:line-through;font-size:22rpx;margin-left:20rpx;">原价:￥{{good.prc_b}}</text>
       <!--
       <text class="tel" data-phone="{{good.telphone}}" bindtap="phoneCall">:{{good.telphone}}</text>
       <image class="telicon" src="/images/tel.png"></image>-->
@@ -86,7 +86,7 @@
       <view class="wanted_icon">
         <image src="../../images/{{wanted_icon}}" />
       </view>
-      <view class="wanted_text">想要</view>
+      <view class="wanted_text">收藏</view>
     </view>
   </view>
   <view class="leaveMessage">
@@ -98,7 +98,7 @@
     </view>
   </view>
   <view class="contactSeller">
-    <view bindtap='contactSeller' data-good="{{good}}">联系卖家</view>
+    <view wx:if="{{!mallVersion}}" bindtap='contactSeller' data-good="{{good}}">联系卖家</view>
   </view>
   <view class="buyNow" bindtap="buyNowBtn" data-good="{{good}}">
     <view>马上买</view>

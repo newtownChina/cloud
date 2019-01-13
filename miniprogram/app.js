@@ -3,7 +3,7 @@ App({
   globalData: {
     userInfo: null,
     windowHeight: 0,
-    code:"",
+    code:"",//临时登录凭证
     openid:""
   },
   onLaunch: function () {
@@ -48,6 +48,7 @@ App({
     .then(res=>{
       console.log(res.result.openid)
       wx.setStorageSync("openid", res.result.openid)
+      wx.setStorageSync("mallVersion", res.result.mallVersion)
     })
     .catch(err=>{
       console.log(err)

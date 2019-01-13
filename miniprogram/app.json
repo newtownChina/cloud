@@ -26,10 +26,6 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/push/push",
-        "text": "发布"
-      },
-      {
         "pagePath": "pages/myself/myself",
         "text": "我的"
       }

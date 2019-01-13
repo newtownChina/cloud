@@ -24,6 +24,10 @@ Page({
   },
   //获取分类页面设置的全局变量，这样从分类页返回时候可以获取值
   onShow: function () {
+    var ifLogin = util.checkLogin()
+    if (!ifLogin) {
+      return
+    }
     this.setData({
       userInfo: app.globalData.userInfo
     })

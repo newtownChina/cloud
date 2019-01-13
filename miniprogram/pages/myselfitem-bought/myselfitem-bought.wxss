@@ -150,3 +150,13 @@ scorllview{
 .has_pay{
   color:#00b26a;
 }
+.good_info_item{
+  width:100rpx;
+  height:40rpx;
+  line-height: 40rpx;
+  border:1px solid #ddd;
+  padding:0 10rpx 0 10rpx;
+  text-align: center;
+  border-radius:30rpx;
+  color:#5cc45b;
+}
