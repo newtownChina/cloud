@@ -1,10 +1,11 @@
 /* pages/classify/classify.wxss */
 Page{
   height:100%;
+  background: #f3f3f3;
 }
 ::-webkit-scrollbar{
   color:white;
-  background: white;
+  background: #f3f3f3;
 }
 .container{
   padding:0;
@@ -23,7 +24,7 @@ Page{
 .container .right{
   width:500rpx;
   height:100%;
-  background: #f1f1f1;
+  color:#333;
 }
 .item{
   width:100%;
