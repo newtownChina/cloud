@@ -125,12 +125,18 @@ Page({
                     })
                     .then(res=>{
                       if (res.stats.updated == 1) {
-                        wx.showToast({
+                        wx.showModal({
                           title: '下单成功',
-                          duration: 600
-                        })
-                        wx.navigateTo({
-                          url: '/pages/myselfitem-bought/myselfitem-bought',
+                          content: '是否查看详细信息',
+                          success(res) {
+                            if (res.confirm) {
+                              wx.navigateTo({
+                                url: '/pages/myselfitem-bought/myselfitem-bought',
+                              })
+                            } else if (res.cancel) {
+                                console.log('不查看订单详细信息')
+                            }
+                          }
                         })
                       }
                     })

@@ -8,7 +8,11 @@ Page({
     tempjpgs: [],//用于上传数据的tempjpgs
     textposition: "",
     classifyDetailName: "分类",
-    sellPrice: "开价",
+    goodName:"",
+    goodDesc:"",
+    sellPrice: "",
+    costPrice:"",
+    priceFocus:false,//移动光标到价格输入面板
     isHidden: true//,
     //publishing:false//是否正在发布中，防止用户多次点击
   },
@@ -21,7 +25,6 @@ Page({
   //获取分类页面设置的全局变量，这样从分类页返回时候可以获取值
   onShow: function () {
     this.setData({
-      storedPhoneNum: wx.getStorageSync("storedPhoneNum"),
       userInfo: app.globalData.userInfo
     })
     console.log("页面加载")
@@ -35,6 +38,22 @@ Page({
   /*生命周期事件 结束 */
 
   /*自定义事件 开始*/
+  /*用于再次发布时初始化 */
+  init:function(){
+    this.setData({
+      addPicPosition: "0 auto",
+      tempjpgs: [],//用于上传数据的tempjpgs
+      showtempjpgs: [],//用于在wxml显示
+      textposition: "",
+      classifyDetailName: "分类",
+      goodName: null,
+      goodDesc: "",
+      sellPrice: "",
+      costPrice: "",
+      priceFocus:false,
+      isHidden: true
+    })
+  },
   addPic: function () {
     var that = this;
     wx.chooseImage({
@@ -75,7 +94,8 @@ Page({
   },
   showPriceGivenPane: function () {
     this.setData({
-      isHidden: false
+      isHidden: false,
+      priceFocus:true
     });
   },
   yesPrice: function () {
@@ -85,7 +105,8 @@ Page({
   },
   checkAndPush: function () {
     //检查登录状态
-    if (!app.globalData.userInfo) {
+    var ifLogin = util.checkLogin()
+    if (!ifLogin) {
       return
     }
     console.log(this.data.classifyDetailName)
@@ -183,12 +204,24 @@ Page({
                 }).then(res => {
                   console.log(res)
                   wx.hideLoading()
-                  wx.switchTab({
-                    url: '/pages/index/index',
+                  wx.showModal({
+                    title: '发布成功',
+                    content: '是否继续发布？',
+                    success(res) {
+                      if (res.confirm) {
+                        console.log('继续发布')
+                        that.init()   
+                      } else if (res.cancel) {
+                        wx.switchTab({
+                          url: '/pages/index/index',
+                        })
+                        console.log('不继续发布')
+                      }
+                    }
                   })
                 }).catch(res => {
                   wx.showToast({
-                    title: '信息上传失败',
+                    title: '商品发布失败',
                   })
                   console.log(res)
                 })
@@ -199,7 +232,6 @@ Page({
               })
               console.log(error)
             })
-
           }
         }
       }, 1000)

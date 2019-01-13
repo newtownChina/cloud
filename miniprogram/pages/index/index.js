@@ -2,6 +2,7 @@
 //功能：展示所有在线商品
 const app = getApp()
 const db = wx.cloud.database()
+const _ = db.command
 const util = require('../../utils/util.js')
 Page({
   data: {
@@ -39,12 +40,14 @@ Page({
     var option = {}
     if (detailName == "全部"){
       option = { 
-        flag:1
+        flag:1,
+        buyer: _.eq(null)//显示还没有买家的
       }
     }else{
       option = {
         flag: 1,
-        clas: detailName
+        clas: detailName,
+        buyer: _.eq(null)//显示还没有买家的
       }
     }
     db.collection('good').where(option)

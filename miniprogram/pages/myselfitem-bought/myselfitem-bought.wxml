@@ -17,8 +17,8 @@
           </view>
         </view>
         <view ><text class="order_id_text">订单编号：{{good.out_trade_no}}</text></view>
-        <view wx:if="{{good.buyer.payState==1}}">付款状态:等待付款</view>
-        <view wx:if="{{good.buyer.payState==0}}">付款状态:已付款</view>
+        <view wx:if="{{good.buyer.payState==0}}">付款状态:等待付款</view>
+        <view wx:if="{{good.buyer.payState==1}}">付款状态:已付款</view>
         <view wx:if="{{good.buyer.state==1}}">交易状态:交易完成</view>
         <view wx:if="{{good.buyer.state==0}}">交易状态:交易中</view> 
         <!-- <view>联系卖家</view> -->
@@ -47,8 +47,9 @@
           <text class="price">{{good.prc_s}}</text>
           <text class="price" style="text-decoration:line-through;font-size:22rpx;margin-left:20rpx;">原价:￥{{good.prc_b}}</text>
           <!--交易未完成才显示收货-->
-          <text wx:if="{{good.flag!=1}}" class="receiveGood" data-id="{{good._id}}" bindtap="receiveGoodBtn">确认收货</text>
-          <text class="receiveGood" bindtap="navigateToGoodDetail"  data-good="{{good}}">查看详情</text>
+          <text wx:if="{{good.buyer.state==0}}" class="receiveGood" data-id="{{good._id}}" bindtap="receiveGoodBtn">确认收货</text>
+          <text class="receiveGood" bindtap="navigateToGoodDetail" data-good="{{good}}">查看详情</text>
+          <text wx:if="{{good.buyer.state==0}}" class="receiveGood" bindtap="navigateToOrderCancel" data-id="{{good._id}}">取消订单</text>
         </view>
       </view>
     </block>

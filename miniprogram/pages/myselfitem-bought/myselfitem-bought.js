@@ -10,6 +10,8 @@ Page({
     goods: [],
     //物流信息
     //tracesData:null
+    bought_arr:[],//我买到的商品的ID集合
+    u_id:null,
     openid:wx.getStorageSync("openid")
   },
   /*生命周期事件 开始 */
@@ -65,7 +67,13 @@ Page({
     .get()
     .then(res => {
       console.log(res)
+      var u_id = res.data[0]._id //当前用户的_id，注意不是openid
       var bought_arr = res.data[0].bought
+      /*将我买到的商品的ID和u_id缓存起来，供取消订单的时候用 */
+      that.setData({
+        bought_arr: bought_arr,
+        u_id: u_id  
+      })
       db.collection("good").where({
         _id: _.in(bought_arr)
       })
@@ -85,7 +93,7 @@ Page({
             })
           } else {
             that.setData({
-              goods: res.data
+              goods: res.data,
             })
           }
           if (res.data.length < _count) {
@@ -109,29 +117,65 @@ Page({
   },
   receiveGoodBtn:function(e){
     var that = this
-    var gid = e.currentTarget.dataset.gid
-    wx.request({
-      url: config.host+'bought.jsp',
+    var id = e.currentTarget.dataset.id
+    db.collection("good").doc(id)
+    .update({
       data:{
-        oper:"receiveGood",
-        gid:gid
-      },
-      success:function(res){
-        console.log(res.data)
-        if(res.data.trim() == "确认收货成功"){
-          wx.showToast({
-            title: '确认收货成功',
-            icon:"success",
-            duration:618
-          })
-        }
-      },
-      fail:function(){
-
-      },
-      complete:function(){
-
+        "buyer.state":1
       }
+    })
+    .then(res=>{
+      if(res.stats.updated == 1){
+        wx.showToast({
+          title: '确认收货成功',
+          icon: "success",
+          duration: 618
+        })
+      }
+    })
+    .catch(err=>{
+      console.log(err)
+    })
+  },
+  navigateToOrderCancel:function(e){
+    var that = this
+    var id = e.currentTarget.dataset.id
+    var openid = that.data.openid
+    db.collection("good").doc(id)//删除商品的买家信息
+    .update({
+      data: {
+        "buyer": null
+      }
+    })
+    .then(res => {
+      if (res.stats.updated == 1) {
+        var u_id = that.data.u_id
+        var bought_arr = that.data.bought_arr//当前商品就是我买到的
+        var index = bought_arr.indexOf(id)
+        bought_arr.splice(index, 1)
+        //将该商品从我买到的字段中删除
+        db.collection("user").doc(u_id)
+        .update({
+          data:{
+            bought:bought_arr
+          }
+        })
+        .then(res=>{
+          if (res.stats.updated == 1) {
+            wx.showToast({
+              title: '订单取消成功',
+              duration:600
+            })
+            that.onShow()
+          }
+        })
+        .catch(err=>{
+          console.log(err)
+        })
+      }
+    })
+    .catch(err => {
+      console.log(err)
     })
   },
   phoneCall: function (e) {
