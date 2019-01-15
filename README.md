@@ -8,10 +8,10 @@
   "name":"",  
   "pwd":"",  
   "contact":"",  
-  "publish":[""],   
-  "want":[""],  
-  "bought":[""],  
-  "sell":[""]  
+  "publish":["",……],   
+  "want":["",……],  
+  "bought":["",……],  
+  "sell":["",……]  
 }
 ```
 ### [商品表] good：
@@ -22,37 +22,37 @@
   "avatar":"",  
   "clas":"",  
   "desc":"",  
-  "flag":{"$numberLong":"1"},  
+  "flag":0 || 1,  
   "msg":[  
     {
+        "openid":"",  
         "nick":"",
         "avatar":"",
         "msg_txt":"",
-        "openid":"",
         "msg_dt":""
     }
   ],  
   "pub_dt":"",  
   "name":"",  
   "nick":"",  
-  "pics":[""],  
+  "pics":["",……],  
   "prc_b":"",  
   "prc_s":"",    
   "buyer":{  
     "buyerInfo":{  
-        "detailInfo":"新港中路397号",  
-        "nationalCode":"510000",  
-        "telNumber":"020-81167888",  
-        "userName":"张三",  
-        "postalCode":"510000",  
-        "provinceName":"广东省",  
-        "cityName":"广州市",  
-        "countyName":"海珠区"  
+        "detailInfo":"",  //新港中路397号
+        "nationalCode":"",  //510000
+        "telNumber":"",  //020-81167888
+        "userName":"",  
+        "postalCode":"",  //510000
+        "provinceName":"",  //广东省
+        "cityName":"",  //广州市
+        "countyName":""  //海珠区
      },  
-    "state":{"$numberLong":"0"},  
-    "payState":{"$numberLong":"0"},  
-    "payWay":"",  
-    "transWay":""  
+    "state":0 || 1,  //0表示交易中，1表示交易完成
+    "payState":0 || 1,  //0表示未支付，1表示支付完成
+    "payWay":"",  //货到付款、微信支付
+    "transWay":""  //圆通，中通，……
   }  
 }  
 ```
