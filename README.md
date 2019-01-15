@@ -3,12 +3,12 @@
 ### [用户表] user：
 ```
 {  
-  "_id":"",  
+  "_id":"", 
+  "_openid":"", 
   "name":"",  
   "pwd":"",  
   "contact":"",  
-  "publish":[""],  
-  "_openid":"",  
+  "publish":[""],   
   "want":[""],  
   "bought":[""],  
   "sell":[""]  
@@ -18,6 +18,7 @@
 ```
 {  
   "_id":"",  
+  "_openid":"",  
   "avatar":"",  
   "clas":"",  
   "desc":"",  
@@ -36,8 +37,7 @@
   "nick":"",  
   "pics":[""],  
   "prc_b":"",  
-  "prc_s":"",  
-  "_openid":"",  
+  "prc_s":"",    
   "buyer":{  
     "buyerInfo":{  
         "detailInfo":"新港中路397号",  
