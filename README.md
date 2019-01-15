@@ -2,15 +2,15 @@
 ## 数据库定义：
 ### [用户表] user：
 {  
-  >"_id":"",  
-  >"name":"",  
-  >"pwd":"",  
-  >"contact":"",  
-  >"publish":[""],  
-  >"_openid":"",  
-  >"want":[""],  
-  >"bought":[""],  
-  >"sell":[""]  
+  "_id":"",  
+  "name":"",  
+  "pwd":"",  
+  "contact":"",  
+  "publish":[""],  
+  "_openid":"",  
+  "want":[""],  
+  "bought":[""],  
+  "sell":[""]  
 }  
 ### [商品表] good：
 {  
