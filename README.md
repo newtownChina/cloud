@@ -1,6 +1,7 @@
 # 云开发二手买卖商城小程序
 ## 数据库定义：
 ### [用户表] user：
+```
 {  
   "_id":"",  
   "name":"",  
@@ -11,8 +12,10 @@
   "want":[""],  
   "bought":[""],  
   "sell":[""]  
-}  
+}
+```
 ### [商品表] good：
+```
 {  
   "_id":"",  
   "avatar":"",  
@@ -20,7 +23,14 @@
   "desc":"",  
   "flag":{"$numberLong":"1"},  
   "msg":[  
-    {"nick":"","avatar":"","msg_txt":"","openid":"","msg_dt":""}],  
+    {
+        "nick":"",
+        "avatar":"",
+        "msg_txt":"",
+        "openid":"",
+        "msg_dt":""
+    }
+  ],  
   "pub_dt":"",  
   "name":"",  
   "nick":"",  
@@ -45,7 +55,7 @@
     "transWay":""  
   }  
 }  
-
+```
 ## 参考文档
 [云开发文档](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/basis/getting-started.html)
 
