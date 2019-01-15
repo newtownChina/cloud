@@ -53,7 +53,9 @@
   "prc_s":"",    
   "buyer":{  
     "buyerInfo":{  
-        "detailInfo":"",  //新港中路397号
+        ```新港中路397号
+        "detailInfo":"", 
+        ```
         "nationalCode":"",  //510000
         "telNumber":"",  //020-81167888
         "userName":"",  
