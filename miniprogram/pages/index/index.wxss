@@ -196,9 +196,6 @@ scorllview{
   line-height: 40rpx;
   text-align: center;
   padding:2rpx;
-  border:1px solid #888;
-  background: #fafafa;
-  border-radius: 10rpx;
   margin:10rpx;
   overflow: hidden;
   text-overflow: ellipsis;

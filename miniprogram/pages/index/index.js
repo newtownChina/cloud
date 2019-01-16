@@ -359,7 +359,7 @@ Page({
         var searchHis = res.data[0].searchHis
         if (searchHis && searchHis.length>0){
           that.setData({
-            searchHis: searchHis,
+            searchHis: searchHis.reverse(),
             hideSearchHis: false
           })
         }else{

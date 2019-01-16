@@ -10,8 +10,9 @@ Page({
     classifyDetailName: "分类",
     goodName:"",
     goodDesc:"",
-    sellPrice: "",
-    costPrice:"",
+    sellPrice: 0,
+    costPrice:0,
+    transFee:0,
     priceFocus:false,//移动光标到价格输入面板
     isHidden: true//,
     //publishing:false//是否正在发布中，防止用户多次点击
@@ -157,7 +158,7 @@ Page({
       console.log(this.data.classifyDetailName)
       console.log(this.data.sellPrice)
       console.log(this.data.costPrice)
-      console.log(this.data.storedPhoneNum)
+      console.log(this.data.transFee)
       wx.showLoading({
         title: '发布中……',
       })
@@ -202,8 +203,8 @@ Page({
                     pics: good_pics,
                     prc_b: that.data.costPrice,
                     prc_s: that.data.sellPrice,
+                    transFee:that.data.transFee,
                     pub_dt: util.formatTime(new Date())//,
-                    //tel: that.data.storedPhoneNum
                   }
                 }).then(res => {
                   console.log(res)
@@ -266,6 +267,12 @@ Page({
     console.log("获取到的新价格:" + e.detail.value)
     this.setData({
       costPrice: e.detail.value
+    })
+  },
+  getTransFee: function (e) {
+    console.log("获取到的新价格:" + e.detail.value)
+    this.setData({
+      transFee: e.detail.value
     })
   },
 

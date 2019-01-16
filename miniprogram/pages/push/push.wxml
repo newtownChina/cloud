@@ -45,13 +45,18 @@
     <text>想卖多少钱？</text>
     <view class="inputPrice">
       <text>￥</text>
-      <input wx:if="{{sellPrice!=''}}" type="digit" placeholder="卖价（必填）" bindblur="getSellPrice" maxlength='8' value="{{sellPrice}}"></input>
-      <input wx:else type="digit" placeholder="卖价（必填）" bindblur="getSellPrice" maxlength='8' focus="{{priceFocus}}"></input>
+      <input wx:if="{{sellPrice!=''}}" type="digit" placeholder="卖价……" bindblur="getSellPrice" maxlength='8' value="{{sellPrice}}"></input>
+      <input wx:else type="digit" placeholder="卖价……" bindblur="getSellPrice" maxlength='8' focus="{{priceFocus}}"></input>
     </view>
     <view class="inputPrice">
       <text>￥</text>
-      <input wx:if="{{costPrice!=''}}" type="digit" placeholder="原价（必填）" bindblur="getCostPrice" maxlength='8' value="{{costPrice}}"></input>
-      <input wx:else type="digit" placeholder="原价（必填）" bindblur="getCostPrice" maxlength='8'></input>
+      <input wx:if="{{costPrice!=''}}" type="digit" placeholder="原价……" bindblur="getCostPrice" maxlength='8' value="{{costPrice}}"></input>
+      <input wx:else type="digit" placeholder="原价……" bindblur="getCostPrice" maxlength='8'></input>
+    </view>
+    <view class="inputPrice">
+      <text>￥</text>
+      <input wx:if="{{transFee!=''}}" type="digit" placeholder="运费……" bindblur="getTransFee" maxlength='8' value="{{transFee}}"></input>
+      <input wx:else type="digit" placeholder="运费……" bindblur="getTransFee" maxlength='8'></input>
     </view>
     <view class="yes" bindtap="yesPrice">确定</view>
   </view>

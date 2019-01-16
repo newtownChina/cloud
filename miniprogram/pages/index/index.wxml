@@ -48,10 +48,8 @@
         <text class="icon">￥</text>
         <text class="price">{{good.prc_s}}</text>
         <text wx:if="{{!mallVersion}}" class="price" style="text-decoration:line-through;font-size:22rpx;margin-left:20rpx;">原价:￥{{good.prc_b}}</text>
-        <!--
-        <text class="tel" data-phone="{{good.telphone}}" bindtap="phoneCall">:{{good.telphone}}</text>
-        <image class="telicon" src="/images/tel.png"></image>
-        -->
+        <text wx:if="{{!mallVersion && good.transFee}}" class="price" style="font-size:22rpx;margin-left:20rpx;">运费:￥{{good.transFee}}</text>
+        <text wx:if="{{!mallVersion && !good.transFee}}" class="price" style="font-size:22rpx;margin-left:20rpx;">运费:包邮</text>
       </view>
       <view wx:if="{{!mallVersion}}" class="classify">{{good.clas}}</view>  
       <view wx:if="{{!mallVersion}}" class="publish_time">发布时间:{{good.pub_dt}}</view>  

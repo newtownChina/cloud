@@ -7,6 +7,9 @@
   border-bottom:1px solid #ddd;
   line-height: 100rpx;
 }
+.inputPrice input{
+  font-size:13px;
+}
 .inputPrice text{
   width:100rpx;
 }
@@ -30,7 +33,7 @@
   bottom: 0;
   left: 0;
   width:710rpx;
-  height:350rpx;
+  height:435rpx;
 }
 .yes{
   width:300rpx;
